@@ -7,7 +7,6 @@
         <meta name="description" content="{{ $metaDescription ?? 'Default meta decription' }}" />
     </head>
 <body>
-<x-layouts.navigation/>
 
 @if(session('status'))
 <div>{{session('status')}}</div>

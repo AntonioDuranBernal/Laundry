@@ -17,13 +17,63 @@ class NotaController extends Controller
      date_default_timezone_set('America/Mexico_City');
      $fecha_actual = date("Y-m-d h:m:s");
      $stringDate = date("Y-m-d",strtotime($fecha_actual."+ 2 days"));
-     return view('notas.create', ['fecha'=>$stringDate]);
+     return view('notas.create', ['fechaEntrega'=>$stringDate,'lugarEntrega'=>1,'idCliente'=>1]);
     }
 
     public function index(){
      $notas = nota::get();
      return view('notas.index', ['notas'=>$notas]);
     }
+
+  public function datosPago(Request $request){
+      $id = $request->input('idNota');
+      $suma= DB::table('detalle_nota_servicios')->where('idNota',$id)->sum(\DB::raw('subtotal'));
+      DB::table('notas')->where('id',$id)->update(['restante' => $suma]);
+      DB::table('notas')->where('id',$id)->update(['total' => $suma]);
+      return view ('notas.datosPago',['idn'=>$id,'actual'=>$suma]);
+  }
+
+    public function datosEntregaMenu(Request $request){
+      $n = DB::table('notas')->where('id',$request->input('idNota'))->first();
+      $fechaEntrega = $n->fechaEntrega;
+      $lugarEntrega = $n->lugarEntrega;
+      $idCliente = $n->idCliente;
+      return view ('notas.updateCreate',['idNota'=>$request->input('idNota'),'idCliente'=>$idCliente,'fechaEntrega'=>$fechaEntrega,'lugarEntrega'=>$lugarEntrega]);
+  }
+
+    public function updateCreate(Request $request){
+      $id = $request->input('idNota');
+      $fechaEntrega = $request->input('fechaEntrega');
+      $lugarEntrega = $request->input('lugarEntrega');
+      $idCliente = $request->input('idCliente');
+      DB::table('notas')->where('id',$id)->update(['fechaEntrega' =>$fechaEntrega]);
+      DB::table('notas')->where('id',$id)->update(['lugarEntrega' =>$lugarEntrega]);
+      DB::table('notas')->where('id',$id)->update(['idCliente' =>$idCliente]);
+      session()->flash('status',"Nota $id, actualizada");
+      return to_route('notas.show',$id);
+  }
+
+
+     public function storeDatosCliente(Request $request){
+      $request->validate(
+        ['idCliente'=> ['required','numeric'],
+        'fechaEntrega'=> ['required','date_format:Y-m-d'],//H:i:s
+        'lugarEntrega'=> ['required','numeric'],
+      ]);
+
+      $nota= new nota;
+      $nota->idEstado = '1';
+      $nota->idUsuarioSistema = '1';
+      $nota->apunte = 'Sin apuntes';
+      $nota->restante = null;
+      $nota->fechaEntrega = $request->input('fechaEntrega');
+      $nota->lugarEntrega = $request->input('lugarEntrega');
+      $nota->idCliente = $request->input('idCliente');
+      $nota->save();
+      $idn = nota::latest('id')->first();
+      $idr = $idn->id;
+      return to_route('notas.indexdetallenotas',$idr);
+  }
 
      public function store(Request $request){
       $request->validate(
@@ -149,14 +199,6 @@ class NotaController extends Controller
      return view ('notas.historialP',['hitorial'=>$hp,'idNota'=>$idr]);
   }
 
-    public function datosPago(Request $request){
-      $id = $request->input('idNota');
-      $suma= DB::table('detalle_nota_servicios')->where('idNota',$id)->sum(\DB::raw('subtotal'));
-      DB::table('notas')->where('id',$id)->update(['restante' => $suma]);
-      DB::table('notas')->where('id',$id)->update(['total' => $suma]);
-      return view ('notas.datosPago',['idn'=>$id,'actual'=>$suma]);
-  }
-
     public function storepago(Request $request){
       $request->validate(
         ['importe'=> ['required','integer'],//0 o mayor
@@ -203,15 +245,11 @@ class NotaController extends Controller
    return view ('notas.show',['nota'=>$n, 'detalles'=>$nd]);
    }
 
-      public function datosPagoMenu($id){
+  public function datosPagoMenu($id){
       $n = DB::table('notas')->where('id', $id)->first();
       $suma = $n->restante;
       return view ('notas.datosPago',['idn'=>$id,'actual'=>$suma]);
   }
-
-
-
-
 
 
 

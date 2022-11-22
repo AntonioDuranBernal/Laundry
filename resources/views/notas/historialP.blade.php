@@ -1,4 +1,4 @@
-<x-layouts.appCreacion title="Historial" meta-description="Historial">
+<x-layouts.app title="Historial" meta-description="Historial">
 <p>Historial de pagos</p>
 <br>
 <p>Nota: {{$idNota}}</p>

@@ -1,7 +1,7 @@
-<x-layouts.app :title="$nota->id" :meta-description="$nota->id">
+<x-layouts.appCreacion :title="$nota->id" :meta-description="$nota->id">
 <br>
 
-<form action="{{route('notas.datosEntregaMenu',$nota->id)}}" method="POST">
+<form action="{{route('notas.datosEntregaMenu')}}" method="POST">
 	@csrf @method('PATCH')
     <input id="idNota" name="idNota" type="hidden"  value={{$nota->id}}>
     <button type="submit">Datos de entrega</button>

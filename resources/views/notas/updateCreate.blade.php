@@ -1,8 +1,9 @@
-<x-layouts.appCreacion title="Nueva nota" meta-description="Nueva nota">
+<x-layouts.appCreacion title="Datos Entrega" meta-description="datos entrega">
 <p>Datos de entrega</p>
 <a href="{{route('notas.store')}}">Registrar cliente</a>
-<form action="{{route('notas.storeDatosCliente')}}" method="POST">
-	@csrf
+<form action="{{route('notas.updateCreate')}}" method="POST">
+	@csrf @method('PATCH')
+    <input id="idNota" name="idNota" type="hidden"  value={{$idNota}}>
 	<label>
         Cliente
 		<input type="text" name="idCliente" value="{{$idCliente}}">

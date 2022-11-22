@@ -10,7 +10,8 @@ Route::view('inicio','inicio')->name('inicio');
 Route::get('/nuevanota',[NotaController::class, 'nuevanota'])->name('notas.nuevanota');
 Route::post('/buscar',[NotaController::class, 'search'])->name('notas.search');
 Route::get('/listado',[NotaController::class, 'index'])->name('notas.index');
-Route::post('/creando',[NotaController::class, 'store'])->name('notas.store');
+Route::patch('/creando',[NotaController::class, 'store'])->name('notas.store');
+Route::post('/datosEntrega',[NotaController::class, 'storeDatosCliente'])->name('notas.storeDatosCliente');
 Route::get('/registro/{idr}',[NotaController::class, 'indexdetallenotas'])->name('notas.indexdetallenotas');
 Route::post('/guardardn',[NotaController::class, 'storeDetallesNota'])->name('notas.storeDetallesNota');
 Route::delete('/cancelar/{idNota}',[NotaController::class, 'cancelarNota'])->name('notas.cancelarNota');
@@ -22,6 +23,9 @@ Route::patch('/nota/datospago',[NotaController::class, 'datosPago'])->name('nota
 Route::patch('/pagoMenu/{id}',[NotaController::class, 'datosPagoMenu'])->name('notas.datosPagoMenu');
 Route::post('/guardarpago',[NotaController::class, 'storepago'])->name('notas.storepago');
 Route::get('/mostrar/{id}',[NotaController::class, 'show'])->name('notas.show');
+Route::patch('/entregaMenu',[NotaController::class, 'datosEntregaMenu'])->name('notas.datosEntregaMenu');
+Route::patch('/actualizarEntrega',[NotaController::class, 'updateCreate'])->name('notas.updateCreate');
+
 
 
 
