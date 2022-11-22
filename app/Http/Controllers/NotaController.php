@@ -26,7 +26,7 @@ class NotaController extends Controller
     }
 
   public function datosPago(Request $request){
-      $id = $request->input('idNota');
+      $id= $request->input('idNota');
       $suma= DB::table('detalle_nota_servicios')->where('idNota',$id)->sum(\DB::raw('subtotal'));
       DB::table('notas')->where('id',$id)->update(['restante' => $suma]);
       DB::table('notas')->where('id',$id)->update(['total' => $suma]);
@@ -57,7 +57,7 @@ class NotaController extends Controller
      public function storeDatosCliente(Request $request){
       $request->validate(
         ['idCliente'=> ['required','numeric'],
-        'fechaEntrega'=> ['required','date_format:Y-m-d'],//H:i:s
+        'fechaEntrega'=> ['required','date_format:Y-m-d','after:tomorrow'],//H:i:s
         'lugarEntrega'=> ['required','numeric'],
       ]);
 
@@ -78,7 +78,7 @@ class NotaController extends Controller
      public function store(Request $request){
       $request->validate(
         ['idCliente'=> ['required','numeric'],
-        'fechaEntrega'=> ['required','date_format:Y-m-d'],//H:i:s
+        'fechaEntrega'=> ['required','date_format:Y-m-d','after:tomorrow'],//H:i:s
         'lugarEntrega'=> ['required','numeric'],
       ]);
 
@@ -205,7 +205,6 @@ class NotaController extends Controller
          'importeentregado'=> ['required','integer'],//
       ]);
 
-     //$nota = nota::where('id', '=',$request->input('idNota'))->first();
      $idnota = $request->input('idNota');
      if ($idnota === null) {
      session()->flash('status',"Es null");
@@ -215,9 +214,11 @@ class NotaController extends Controller
      $idr = $nota->id;
      $importe = $request->input('importe');
      $entregado = $request->input('importeentregado');
+     if ($entregado >= $importe) {
      $totalinicial= $nota->total;
      $totalrestante= $nota->restante;
-
+     $totalAEntregar = $totalrestante+$importe;
+     if ($totalAEntregar<=$totalrestante){
      if ($totalrestante==$totalinicial){
         $restante = $totalinicial-$importe;
         DB::table('notas')->where('id', $idr)->update(['idEstado' => '2']);//PAGO COMPLETO CAMBIAR ESTADO
@@ -236,7 +237,17 @@ class NotaController extends Controller
         $historia->save();
         session()->flash('status',"Cambio: $$cambio");
         return to_route('notas.show',$idr);
+    }else{
+        session()->flash('status',"La cantidad a entregar eccede el costo de la nota");
+        $suma= DB::table('detalle_nota_servicios')->where('idNota',$idr)->sum(\DB::raw('subtotal'));
+        return view ('notas.datosPago',['idn'=>$idr,'actual'=>$suma]);
     }
+    }else{
+        session()->flash('status',"La cantidad entregada debe ser mayor o igual al importe");
+        $suma= DB::table('detalle_nota_servicios')->where('idNota',$idr)->sum(\DB::raw('subtotal'));
+        return view ('notas.datosPago',['idn'=>$idr,'actual'=>$suma]);
+    }
+   }
   }
 
    public function show($id){
