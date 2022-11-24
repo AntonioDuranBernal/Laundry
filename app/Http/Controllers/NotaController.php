@@ -182,9 +182,9 @@ public function store(Request $request){
      $idr = $nota->id;
      $importe = $request->input('importe');
      $entregado = $request->input('importeentregado');
+     $totalinicial= $nota->total;
+     $totalrestante= $nota->restante;
      if ($entregado >= $importe) {
-       $totalinicial= $nota->total;
-       $totalrestante= $nota->restante;
        $lopagado = $totalinicial-$totalrestante;
        $totalAEntregar = $lopagado+$importe;
        if ($totalAEntregar<=$totalinicial){
@@ -208,13 +208,11 @@ public function store(Request $request){
         return to_route('notas.show',$idr);
       }else{
         session()->flash('status',"La cantidad a entregar eccede el costo de la nota");
-        $suma= DB::table('detalle_nota_servicios')->where('idNota',$idr)->sum(\DB::raw('subtotal'));
-        return view ('notas.datosPago',['idn'=>$idr,'actual'=>$suma]);
+        return view ('notas.datosPago',['idn'=>$idr,'actual'=>$totalrestante]);
       }
     }else{
       session()->flash('status',"La cantidad entregada debe ser mayor o igual al importe");
-      $suma= DB::table('detalle_nota_servicios')->where('idNota',$idr)->sum(\DB::raw('subtotal'));
-      return view ('notas.datosPago',['idn'=>$idr,'actual'=>$suma]);
+      return view ('notas.datosPago',['idn'=>$idr,'actual'=>$totalrestante]);
     }
   }
 }
