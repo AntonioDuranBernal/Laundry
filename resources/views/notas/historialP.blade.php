@@ -13,7 +13,7 @@
 <br>
 <form action="{{route('notas.registrarPago')}}" method="POST">
 	@csrf @method('PATCH')
-	<input id="idNota" name="idNota" type="hidden"  value={{$historia->idNota}}>
+	<input id="idNota" name="idNota" type="hidden"  value={{$idNota}}>
 	<label>
         Importe:
 		<input type="text" name="importe" value="0">

@@ -18,14 +18,14 @@ return new class extends Migration
             $table->integer('idEstado');
             $table->integer('idUsuarioSistema');
             $table->timestamp('fechaEntrega');
-            $table->timestamp('fechaSalida');
-            $table->double('total');
+            $table->timestamp('fechaSalida')->nullable();
+            $table->double('total')->nullable();
             $table->integer('idCliente');
-            $table->string('apunte');
+            $table->string('apunte')->nullable();
             $table->integer('lugarEntrega');
-            $table->timestamp('updated_at');
-            $table->timestamp('created_at');
-            $table->double('restante');
+            $table->timestamp('updated_at')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->double('restante')->nullable();
         });
     }
 

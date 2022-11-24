@@ -18,12 +18,12 @@ return new class extends Migration
             $table->integer('idNota');
             $table->integer('idArticulo');
             $table->integer('idServicio');
-            $table->string('descripcion');
+            $table->string('descripcion')->nullable();
             $table->double('subtotal');
             $table->integer('estado');
             $table->integer('cantidad');
-            $table->timestamp('updated_at');
-            $table->timestamp('created_at');
+            $table->timestamp('updated_at')->nullable();
+            $table->timestamp('created_at')->nullable();
         });
     }
 
