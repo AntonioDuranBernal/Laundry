@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NotaController;
 
 Route::view('/','welcome')->name('welcome');
-Route::view('inicio','inicio')->name('inicio');
+Route::view('inicio','inicio')->name('s');
 
 
 Route::get('/nuevanota',[NotaController::class, 'nuevanota'])->name('notas.nuevanota');

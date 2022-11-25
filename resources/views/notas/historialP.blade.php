@@ -32,6 +32,6 @@
 	</label>
 	<button type="submit">Registrar pago</button>
 </form>
-<a href="{{route('notas.index')}}">Inicio</a>
+<a href="{{route('notas.show',$idNota)}}">Regresar</a>
 <br>
 </x-layouts.app>

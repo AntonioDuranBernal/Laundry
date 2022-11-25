@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class detalleNotaServicio extends Model
 {
         use HasFactory;
-     protected $fillable = [
+     protected $fillable = [];
+}
+/*
         'id',
         'idNota',
         'idArticulo',
@@ -17,5 +19,4 @@ class detalleNotaServicio extends Model
         'subtotal',
         'estado',
         'cantidad',
-    ];
-}
+    */

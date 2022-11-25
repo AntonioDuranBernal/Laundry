@@ -123,7 +123,7 @@ public function storeDatosCliente(Request $request){
     ]);
     $n = DB::table('notas')->where('id', $request->input('id'))->first();
     if(is_null($n)){
-     return view('welcome');
+     return view('inicio');
    }
    $nd = DB::table('detalle_nota_servicios')->where('idNota', $request->input('id'))->get();
    return view ('notas.show',['nota'=>$n, 'detalles'=>$nd]);

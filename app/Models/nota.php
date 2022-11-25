@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class nota extends Model
 {
-        use HasFactory;
-    protected $fillable = [
+    use HasFactory;
+    protected $fillable = [];
+}
+
+/*
         'id',
         'idEstado',
         'idUsuarioSistema',
@@ -19,5 +22,4 @@ class nota extends Model
         'apunte',
         'lugarEntrega',
         'restante'
-    ];
-}
+   */

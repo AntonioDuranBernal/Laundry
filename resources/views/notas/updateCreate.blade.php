@@ -30,5 +30,5 @@
 	</label>
 	<button type="submit">Siguiente</button>
 </form>
-<a href="{{route('welcome')}}">Regresar</a>
+<a href="{{route('inicio')}}">Regresar</a>
 </x-layouts.app>

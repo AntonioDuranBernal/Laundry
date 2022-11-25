@@ -1,6 +1,6 @@
 <x-layouts.appCreacion title="Nueva nota" meta-description="Nueva nota">
 <p>Datos de entrega</p>
-<a href="{{route('notas.store')}}">Registrar cliente</a>
+<a href="{{route('inicio')}}">Registrar cliente</a>
 <form action="{{route('notas.storeDatosCliente')}}" method="POST">
 	@csrf
 	<label>
@@ -29,5 +29,5 @@
 	</label>
 	<button type="submit">Siguiente</button>
 </form>
-<a href="{{route('welcome')}}">Regresar</a>
+<a href="{{route('inicio')}}">Regresar</a>
 </x-layouts.app>

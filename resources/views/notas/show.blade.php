@@ -49,5 +49,5 @@
 	<input id="idNota" name="idNota" type="hidden"  value={{$nota->id}}>
     <button type="submit">Nota lista</button>
 </form>
-<a href="{{route('notas.index')}}">Regresar</a>
+<a href="{{route('inicio')}}">Regresar</a>
 </x-layouts.app>

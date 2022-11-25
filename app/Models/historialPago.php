@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class historialPago extends Model
 {
     use HasFactory;
-    protected $fillable = [
+    protected $fillable = [];
+}
+/*
     'id',
     'idNota',
     'importe',
     'restante',
     'idUsuarioSistema',
-    ];
-}
+   */
