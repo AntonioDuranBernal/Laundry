@@ -1,5 +1,5 @@
 <x-layouts.app title="Historial" meta-description="Historial">
-<p>Historial de pagos</p>
+<h1 class="my-4 font-serif text-3xl text-center text-sky-600 dark:text-sky-500">HISTORIAL DE PAGO</h1>
 <br>
 <p>Nota: {{$idNota}}</p>
 @foreach($hitorial as $historia)

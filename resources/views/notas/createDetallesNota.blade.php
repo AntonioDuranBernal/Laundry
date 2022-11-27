@@ -1,5 +1,5 @@
 <x-layouts.appCreacion title="Nueva nota" meta-description="Nueva nota">
-<p>Detalles de nota</p>
+<h1 class="my-4 font-serif text-3xl text-center text-sky-600 dark:text-sky-500">DETALLES DE NOTA</h1>
 <form action="{{route('notas.cancelarNota',$idr)}}" method="POST">
 	@csrf @method('DELETE')
     <input id="idNota" name="idNota" type="hidden"  value={{$idr}}>

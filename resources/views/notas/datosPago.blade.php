@@ -1,5 +1,5 @@
 <x-layouts.appCreacion title="Datos de pago" meta-description="Datos de pago">
-<p>Datos de pago</p>
+<h1 class="my-4 font-serif text-3xl text-center text-sky-600 dark:text-sky-500">DATOS DE PAGO</h1>
 <p>Total a pagar: {{$actual}}</p>
 <form action="{{route('notas.cancelarNota',$idn)}}" method="POST">
 	@csrf @method('DELETE')

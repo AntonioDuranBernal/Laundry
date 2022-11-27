@@ -1,5 +1,5 @@
 <x-layouts.appCreacion title="Datos Entrega" meta-description="datos entrega">
-<p>Datos de entrega</p>
+<h1 class="my-4 font-serif text-3xl text-center text-sky-600 dark:text-sky-500">DATOS DE ENTREGA</h1>
 <a href="{{route('notas.store')}}">Registrar cliente</a>
 <form action="{{route('notas.updateCreate')}}" method="POST">
 	@csrf @method('PATCH')
