@@ -1,11 +1,6 @@
 <x-layouts.appCreacion title="Nueva nota" meta-description="Nueva nota">
 <h1 class="my-4 font-serif text-3xl text-center text-sky-600 dark:text-sky-500">DETALLES DE NOTA</h1>
-<form action="{{route('notas.cancelarNota',$idr)}}" method="POST">
-	@csrf @method('DELETE')
-    <input id="idNota" name="idNota" type="hidden"  value={{$idr}}>
-    <button type="submit">Cancelar nota</button>
-</form>
-<form action="{{route('notas.storeDetallesNota')}}" method="POST">
+<form class="max-w-xl px-8 py-4 mx-auto bg-white rounded shadow dark:bg-slate-800" action="{{route('notas.storeDetallesNota')}}" method="POST">
 	@csrf
 	<input id="idNota" name="idNota" type="hidden"  value={{$idr}}>
 	<label>
@@ -48,9 +43,12 @@
 		<small style="color: red">{{$message}}</small>
 		@enderror
 	</label>
-	<button type="submit">Agregar</button>
+		<div class="flex items-center justify-between mt-2">
+            <button class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" type="submit">Siguiente</button>
+        </div>
 </form>
 <br>
+<div class="max-w-xl px-8 py-1 mx-auto bg-white rounded shadow dark:bg-slate-800">
 @foreach($detalles as $detalle)
 <h2>
 	   Cantidad: {{$detalle->cantidad}}
@@ -60,12 +58,22 @@
 	   Subtotal: {{$detalle->subtotal}}
 </h2>
 @endforeach
-<br>
-<form action="{{route('notas.datosPago')}}" method="POST">
+ </div>
+<div class="flex items-center justify-between mt-3">
+<form class="max-w-xl px-8 py-1 mx-auto bg-white rounded shadow dark:bg-slate-800" action="{{route('notas.cancelarNota',$idr)}}" method="POST">
+	@csrf @method('DELETE')
+    <input id="idNota" name="idNota" type="hidden"  value={{$idr}}>
+    		<div class="flex items-center justify-between mt-2">
+            <button class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" type="submit">Cancelar nota</button>
+        </div>
+</form>
+<form class="max-w-xl px-8 py-1 mx-auto bg-white rounded shadow dark:bg-slate-800" action="{{route('notas.datosPago')}}" method="POST">
 	@csrf @method('PATCH')
     <input id="idNota" name="idNota" type="hidden"  value={{$idr}}>
-    <button type="submit">Continuar</button>
+    		<div class="flex items-center justify-between mt-2">
+            <button class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" type="submit">Continuar</button>
+        </div>
 </form>
-
+</div>
 </x-layouts.app>
 
