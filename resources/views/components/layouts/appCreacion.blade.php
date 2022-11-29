@@ -5,10 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{$title ?? ''}} | Lava Express</title>
         <meta name="description" content="{{ $metaDescription ?? 'Default meta decription' }}" />
-                @vite(['resources/css/app.scss', 'resources/js/app.js'])
+        @vite(['resources/css/app.scss', 'resources/js/app.js'])
     </head>
 <body>
-
 @if(session('status'))
 <div>{{session('status')}}</div>
 @endif

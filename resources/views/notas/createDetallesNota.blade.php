@@ -48,17 +48,32 @@
         </div>
 </form>
 <br>
-<div class="max-w-xl px-8 py-1 mx-auto bg-white rounded shadow dark:bg-slate-800">
-@foreach($detalles as $detalle)
-<h2>
-	   Cantidad: {{$detalle->cantidad}}
-	   Elemento: {{$detalle->idArticulo}}
-	   Servicio: {{$detalle->idServicio}}
-	   Observaciones: {{$detalle->descripcion}}
-	   Subtotal: {{$detalle->subtotal}}
-</h2>
-@endforeach
+
+<div class="max-w-xl px-20 py-0 mx-auto bg-white ">
+<table class="border-collapse border border-slate-400 ...">
+  <thead>
+    <tr>
+      <th class="border border-slate-300 ...">Cantidad</th>
+      <th class="border border-slate-300 ...">Elemento</th>
+      <th class="border border-slate-300 ...">Servicio</th>
+      <th class="border border-slate-300 ...">Observaciones</th>
+      <th class="border border-slate-300 ...">Subtotal</th>
+    </tr>
+  </thead>
+  <tbody>
+  	@foreach($detalles as $detalle)
+    <tr>
+      <td class="border border-slate-300 ...">{{$detalle->cantidad}}</td>
+      <td class="border border-slate-300 ...">{{$detalle->idArticulo}}</td>
+            <td class="border border-slate-300 ...">{{$detalle->idServicio}}</td>
+      <td class="border border-slate-300 ...">{{$detalle->descripcion}}</td>
+      <td class="border border-slate-300 ...">{{$detalle->subtotal}}</td>
+    </tr>
+    @endforeach
+  </tbody>
+</table>
  </div>
+
 <div class="flex items-center justify-between mt-3">
 <form class="max-w-xl px-8 py-1 mx-auto bg-white rounded shadow dark:bg-slate-800" action="{{route('notas.cancelarNota',$idr)}}" method="POST">
 	@csrf @method('DELETE')
