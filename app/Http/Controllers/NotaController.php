@@ -12,6 +12,17 @@ use App\Models\historialPago;
 
 class NotaController extends Controller
 {
+  /*public function __construct(){
+    $this->middleware('auth',['except'=>['welcome']]);
+  }*/
+
+public function inicio(){
+  return view ('inicio');
+}
+
+public function welcome(){
+  return view ('welcome');
+}
 
   public function nuevanota(){
    date_default_timezone_set('America/Mexico_City');
@@ -114,7 +125,7 @@ public function storeDatosCliente(Request $request){
 
   public function cancelarNota(Nota $idNota){
     $idNota->delete();
-    return to_route('notas.index')->with('status','Nota cancelada');
+    return to_route('notas.index')->with('status','Nota eliminada');
   }
 
   public function search(Request $request){
@@ -207,11 +218,11 @@ public function store(Request $request){
         session()->flash('status',"Cambio: $$cambio");
         return to_route('notas.show',$idr);
       }else{
-        session()->flash('status',"La cantidad a entregar eccede el costo de la nota");
+        session()->flash('status',"La cantidad a entregar eccede el costo total de la nota");
         return view ('notas.datosPago',['idn'=>$idr,'actual'=>$totalrestante]);
       }
     }else{
-      session()->flash('status',"La cantidad entregada debe ser mayor o igual al importe");
+      session()->flash('status',"La cantidad entregada debe ser mayor o igual al pago");
       return view ('notas.datosPago',['idn'=>$idr,'actual'=>$totalrestante]);
     }
   }
@@ -257,12 +268,12 @@ public function registrarPago(Request $request){
          session()->flash('status',"Cambio: $$cambio");
          return to_route('notas.show',$idr);
       }else{
-        session()->flash('status',"La cantidad a entregar eccede el costo de la nota");
+        session()->flash('status',"La cantidad a entregar eccede el costo total de la nota");
         $hp = DB::table('historial_pagos')->where('idNota',$idr)->get();
         return view ('notas.historialP',['hitorial'=>$hp,'idNota'=>$idr]);
       }
     }else{
-      session()->flash('status',"La cantidad entregada debe ser mayor o igual al importe");
+      session()->flash('status',"La cantidad entregada debe ser mayor o igual al pago");
       $hp = DB::table('historial_pagos')->where('idNota',$idr)->get();
       return view ('notas.historialP',['hitorial'=>$hp,'idNota'=>$idr]);
     }

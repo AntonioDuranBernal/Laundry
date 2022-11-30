@@ -3,9 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NotaController;
 
-Route::view('/','welcome')->name('welcome');
-Route::view('inicio','inicio')->name('s');
 
+Route::get('inicio',[NotaController::class, 'inicio'])->name('inicio');
+Route::get('/',[NotaController::class, 'welcome'])->name('welcome');
+
+Route::get('/login',function(){
+return 'Login Page';
+})->name('login');
 
 Route::get('/nuevanota',[NotaController::class, 'nuevanota'])->name('notas.nuevanota');
 Route::post('/buscar',[NotaController::class, 'search'])->name('notas.search');
