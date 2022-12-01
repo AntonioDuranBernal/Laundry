@@ -2,14 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NotaController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
+Route::get('/login',[RegisteredUserController::class, 'login'])->name('login');
+Route::view('/registro','auth.registro')->name('registro');
+Route::post('/store',[RegisteredUserController::class, 'store'])->name('auth.store');
 
 Route::get('inicio',[NotaController::class, 'inicio'])->name('inicio');
 Route::get('/',[NotaController::class, 'welcome'])->name('welcome');
-
-Route::get('/login',function(){
-return 'Login Page';
-})->name('login');
 
 Route::get('/nuevanota',[NotaController::class, 'nuevanota'])->name('notas.nuevanota');
 Route::post('/buscar',[NotaController::class, 'search'])->name('notas.search');
