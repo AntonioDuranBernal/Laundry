@@ -1,6 +1,6 @@
 <x-layouts.app title="Detalles" meta-description="Detalles meta description">
     <header class="px-6 py-4 space-y-2 text-center">
-        <h1 class="font-serif text-3xl text-center text-sky-600 dark:text-sky-500">LISTADO</h1>
+        <h1 class="font-serif text-3xl text-center text-sky-600 dark:text-sky-500">Listado</h1>
     </header>
 @foreach($notas as $nota)
 <h2 class="max-w-xl px-8 py-4 mx-auto">

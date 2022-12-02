@@ -5,9 +5,7 @@ class="w-screen overflow-scroll bg-white border-b dark:bg-slate-900 border-slate
     <div class="relative flex items-center justify-between h-16">
         <div class="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
             <div class="flex items-center flex-shrink-0">
-
                 <div class="text-black">{{Auth::user()->name}}</div>
-
             </div>
             <div class="mx-auto">
                 <div class="flex space-x-4">

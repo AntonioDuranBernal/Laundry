@@ -15,9 +15,9 @@ class AutheticatedSessionController extends Controller
        ['email'=> ['email','string','required'],//'required',
         'password'=> ['required','string'],
        ]);
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials,$request->boolean('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended('inicio');
+            return redirect()->intended('inicio')->with('status','Sesión iniciada!');
         }
         return back()->withErrors([
             'email' => 'Las credenciales dadas no coinciden.',
@@ -26,14 +26,8 @@ class AutheticatedSessionController extends Controller
 
         public function destroy(Request $request){
          Auth::guard('web')->logout();
-         /*$request->session()->invalidate();
-         $request->session->regenerateToken();
-         //return to_route('login')->with('status','Sesión cerrada!');
-         return $this->loggedOut($request) ?: redirect('login')->with('status','Sesión cerrada!');*/
-        //$this->guard('web')->logout();
         $request->session()->invalidate();
-        $request->session()->regenerateToken(); // add this line here
-        //return $this->loggedOut($request) ?: redirect('login');
-        return to_route('login')->with('status','Sesión cerrada!');
+        $request->session()->regenerateToken();
+        return to_route('welcome')->with('status','Sesión cerrada!');
         }
 }
