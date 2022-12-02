@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NotaController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\AutheticatedSessionController;
 
-Route::get('/login',[RegisteredUserController::class, 'login'])->name('login');
+Route::post('/ustore',[RegisteredUserController::class, 'ustore'])->name('user.store');
+Route::post('/sesion',[AutheticatedSessionController::class, 'astore'])->name('session');
 Route::view('/registro','auth.registro')->name('registro');
-Route::post('/store',[RegisteredUserController::class, 'store'])->name('auth.store');
+Route::get('/login',[RegisteredUserController::class, 'login'])->name('login');
 
 Route::get('inicio',[NotaController::class, 'inicio'])->name('inicio');
 Route::get('/',[NotaController::class, 'welcome'])->name('welcome');

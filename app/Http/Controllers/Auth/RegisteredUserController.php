@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rules;
 use Illuminate\Http\Request;
 use App\Models\User;
-
 use App\Http\Controllers\Auth\RegisteredUserController;
+
 class RegisteredUserController extends Controller
 {
-  public function store(Request $request){
+  public function ustore(Request $request){
     $request->validate(
     [   'name'=> ['required','string'],
         'email'=> ['email','unique:users'],//'required',
