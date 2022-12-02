@@ -7,6 +7,7 @@ use App\Http\Controllers\AutheticatedSessionController;
 
 Route::post('/ustore',[RegisteredUserController::class, 'ustore'])->name('user.store');
 Route::post('/sesion',[AutheticatedSessionController::class, 'astore'])->name('session');
+Route::post('/terminar',[AutheticatedSessionController::class, 'destroy'])->name('logout');
 Route::view('/registro','auth.registro')->name('registro');
 Route::get('/login',[RegisteredUserController::class, 'login'])->name('login');
 
