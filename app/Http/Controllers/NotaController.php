@@ -81,9 +81,15 @@ public function storeDatosCliente(Request $request){
 public function datosPago(Request $request){
   $id= $request->input('idNota');
   $suma= DB::table('detalle_nota_servicios')->where('idNota',$id)->sum(\DB::raw('subtotal'));
-  DB::table('notas')->where('id',$id)->update(['restante' => $suma]);
-  DB::table('notas')->where('id',$id)->update(['total' => $suma]);
-  return view ('notas.datosPago',['idn'=>$id,'actual'=>$suma]);
+
+  if ($suma>0) {
+    DB::table('notas')->where('id',$id)->update(['restante' => $suma]);
+    DB::table('notas')->where('id',$id)->update(['total' => $suma]);
+    return view ('notas.datosPago',['idn'=>$id,'actual'=>$suma]);
+  }else{
+    session()->flash('status',"Se debe agregar al menos un servicio para continuar.");
+    return to_route('notas.indexdetallenotas',$id);
+  }
 }
 
 public function indexdetallenotas($idr){
@@ -132,7 +138,8 @@ public function indexdetallenotas($idr){
     $request->validate(
       ['id'=> ['required','numeric'],
     ]);
-    $n = DB::table('notas')->where('id', $request->input('id'))->first();
+    //$id=rtrim($request->input('id'));
+    $n = DB::table('notas')->where('id',$request->input('id') )->first();
     if(is_null($n)){
      return view('inicio');
    }
@@ -230,9 +237,9 @@ public function storepago(Request $request){
 
 public function registrarPago(Request $request){
   $request->validate(
-        ['importe'=> ['required','integer'],//0 o mayor
-         'importeentregado'=> ['required','integer'],//
-       ]);
+    ['importe'=> ['required','integer'],
+    'importeentregado'=> ['required','integer'],//
+    ]);
 
   $idnota = $request->input('idNota');
   if ($idnota === null) {
@@ -243,7 +250,7 @@ public function registrarPago(Request $request){
    $idr = $nota->id;
    $importe = $request->input('importe');
    $entregado = $request->input('importeentregado');
-   if ($entregado >= $importe) {
+   if ($entregado >= $importe && $importe >0) {
      $totalinicial= $nota->total;
      $totalrestante= $nota->restante;
      $lopagado = $totalinicial-$totalrestante;
