@@ -21,6 +21,7 @@ Route::patch('/creando',[NotaController::class, 'store'])->name('notas.store');
 Route::post('/datosEntrega',[NotaController::class, 'storeDatosCliente'])->name('notas.storeDatosCliente');
 Route::get('/registro/{idr}',[NotaController::class, 'indexdetallenotas'])->name('notas.indexdetallenotas');
 Route::post('/guardardn',[NotaController::class, 'storeDetallesNota'])->name('notas.storeDetallesNota');
+Route::post('/addDetalle/{idr}',[NotaController::class, 'addDetalle'])->name('notas.addDetalle');
 Route::delete('/cancelar/{idNota}',[NotaController::class, 'cancelarNota'])->name('notas.cancelarNota');
 Route::patch('/notalista',[NotaController::class, 'todolisto'])->name('notas.todolisto');
 Route::patch('/entregando',[NotaController::class, 'entregarNota'])->name('notas.entregarNota');
