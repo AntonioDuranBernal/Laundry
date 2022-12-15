@@ -84,12 +84,13 @@
 </div>
 <div class=" grid grid-cols-4 my-4 max-w-xl px-4 py-4 mx-auto bg-white rounded shadow dark:bg-slate-800">
 	<a class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" href="{{route('inicio')}}">Regresar</a>
-	<form class="text-sm font-semibold underline border-2 border-transparent rounded dark:text-slate-300 text-slate-600 focus:border-slate-500 focus:outline-none" action="{{route('notas.moverNota')}}" method="POST">
+
+	<form class="text-sm font-semibold underline border-2 border-transparent rounded dark:text-slate-300 text-slate-600 focus:border-slate-500 focus:outline-none" <?php if ($nota->idEstado >= '16'){ ?> style="display:none;" <?php   } ?> action="{{route('notas.entregarNota')}}" method="POST">
 		@csrf @method('PATCH')
 		<input id="idNota" name="idNota" type="hidden"  value={{$nota->id}}>
-		<button class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" type="submit">Mover nota</button>
+		<button class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" type="submit">Entregar nota</button>
 	</form>
-	<form class="text-sm font-semibold underline border-2 border-transparent rounded dark:text-slate-300 text-slate-600 focus:border-slate-500 focus:outline-none" action="{{route('notas.todolisto')}}" method="POST">
+	<form class="text-sm font-semibold underline border-2 border-transparent rounded dark:text-slate-300 text-slate-600 focus:border-slate-500 focus:outline-none" <?php if ($nota->idEstado >= '15' | $nota->idEstado <= '26'){ ?> style="display:none;" <?php   } ?> action="{{route('notas.todolisto')}}" method="POST">
 		@csrf @method('PATCH')
 		<input id="idNota" name="idNota" type="hidden"  value={{$nota->id}}>
 		<button class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" type="submit">Nota lista</button>
