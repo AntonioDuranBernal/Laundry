@@ -19,10 +19,25 @@ class="w-screen overflow-scroll bg-white border-b dark:bg-slate-900 border-slate
                 class="px-3 py-2 text-sm font-medium rounded-md hover:text-sky-600 dark:hover:text-white {{request()->routeIs('notas.nuevanota.*') ? 'text-sky-600 dark:text-white' : 'text-black'}}">
                 Nueva nota
             </a>
-            <!-- Active: 'text-sky-600 dark:text-white', Inactive 'text-slate-400' -->
+                    <!-- Active: 'text-sky-600 dark:text-white', Inactive 'text-slate-400' -->
             <a href="{{ route('notas.index')}}"
             class="px-3 py-2 text-sm font-medium rounded-md hover:text-sky-600 dark:hover:text-white {{request()->routeIs('notas.index') ? 'text-sky-600 dark:text-white' : 'text-black'}}">
-            Listado de notas
+            Notas
+        </a>
+                    <!-- Active: 'text-sky-600 dark:text-white', Inactive 'text-slate-400' -->
+            <a href="{{ route('clientes.inicioClientes')}}"
+            class="px-3 py-2 text-sm font-medium rounded-md hover:text-sky-600 dark:hover:text-white {{request()->routeIs('clientes.inicioClientes') ? 'text-sky-600 dark:text-white' : 'text-black'}}">
+            Clientes
+        </a>
+                    <!-- Active: 'text-sky-600 dark:text-white', Inactive 'text-slate-400' -->
+            <a href="{{ route('servicios.inicioServicios')}}"
+            class="px-3 py-2 text-sm font-medium rounded-md hover:text-sky-600 dark:hover:text-white {{request()->routeIs('servicios.inicioServicios') ? 'text-sky-600 dark:text-white' : 'text-black'}}">
+            Servicios
+        </a>
+                    <!-- Active: 'text-sky-600 dark:text-white', Inactive 'text-slate-400' -->
+            <a href="{{ route('prendas.inicioPrendas')}}"
+            class="px-3 py-2 text-sm font-medium rounded-md hover:text-sky-600 dark:hover:text-white {{request()->routeIs('prendas.inicioPrendas') ? 'text-sky-600 dark:text-white' : 'text-black'}}">
+            Prendas
         </a>
     </div>
 </div>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NotaController;
+use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AutheticatedSessionController;
 
@@ -10,6 +11,11 @@ Route::post('/sesion',[AutheticatedSessionController::class, 'astore'])->name('s
 Route::post('/terminar',[AutheticatedSessionController::class, 'destroy'])->name('logout');
 Route::view('/registro','auth.registro')->name('registro');
 Route::get('/login',[RegisteredUserController::class, 'login'])->name('login');
+
+Route::view('/clientes','clientes.inicioClientes')->name('clientes.inicioClientes');
+Route::view('/notas','notas.inicioNotas')->name('notas.inicioNotas');
+Route::view('/prendas','prendas.inicioPrendas')->name('prendas.inicioPrendas');
+Route::view('/servicios','servicios.inicioServicios')->name('servicios.inicioServicios');
 
 Route::get('inicio',[NotaController::class, 'inicio'])->name('inicio');
 Route::get('/',[NotaController::class, 'welcome'])->name('welcome');
@@ -33,6 +39,11 @@ Route::post('/guardarpago',[NotaController::class, 'storepago'])->name('notas.st
 Route::get('/mostrar/{id}',[NotaController::class, 'show'])->name('notas.show');
 Route::patch('/entregaMenu',[NotaController::class, 'datosEntregaMenu'])->name('notas.datosEntregaMenu');
 Route::patch('/actualizarEntrega',[NotaController::class, 'updateCreate'])->name('notas.updateCreate');
+
+Route::post('/buscarCliente',[ClientesController::class, 'search'])->name('clientes.search');
+Route::delete('/eliminar/{idc}',[ClientesController::class, 'eliminarCliente'])->name('clientes.eliminarCliente');
+Route::view('/registro','clientes.addCliente')->name('clientes.nuevo');
+Route::post('/agregarCliente',[ClientesController::class, 'agregar'])->name('clientes.agregar');
 
 
 

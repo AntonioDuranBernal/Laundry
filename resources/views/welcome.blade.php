@@ -1,3 +1,5 @@
+    <x-layouts.appCreacion title="Bienvenida" meta-description="WELCOME">
+
     <header class="px-6 py-4 space-y-2 text-center">
         <h1 class="font-serif text-3xl text-sky-600 dark:text-sky-500">Web Page Laundry</h1>
 
@@ -16,9 +18,5 @@
         </div>
     </form>
     @endguest
-
-
-
-
-
 </header>
+</x-layouts.appCreacion>

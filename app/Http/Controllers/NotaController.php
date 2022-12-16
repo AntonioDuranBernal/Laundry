@@ -95,7 +95,7 @@ public function datosPago(Request $request){
 
 
 public function addDetalle($idr){
-   return view('notas.addDetalle',['idr'=>$idr]);
+ return view('notas.addDetalle',['idr'=>$idr]);
 }
 
 public function indexdetallenotas($idr){
@@ -158,25 +158,25 @@ public function indexdetallenotas($idr){
    $nota = nota::where('id', '=',$idr)->first();
    $resta = $nota->restante;
    if ($resta>0) {
-        DB::table('notas')->where('id',$idr)->update(['idEstado' => '12']);
-        return to_route('notas.show',$idr)->with('status','Nota marcada como lista, con pago pendiente.');
-      }else{
-        DB::table('notas')->where('id',$idr)->update(['idEstado' => '14']);
-        return to_route('notas.show',$idr)->with('status','Nota marcada como lista, con pago completo.');
-      }
+    DB::table('notas')->where('id',$idr)->update(['idEstado' => '12']);
+    return to_route('notas.show',$idr)->with('status','Nota marcada como lista, con pago pendiente.');
+  }else{
+    DB::table('notas')->where('id',$idr)->update(['idEstado' => '14']);
+    return to_route('notas.show',$idr)->with('status','Nota marcada como lista, con pago completo.');
+  }
 }
 
 public function entregarNota(Request $request){
-   $idr = $request->input('idNota');
-   $nota = nota::where('id', '=',$idr)->first();
-   $resta = $nota->restante;
-   if ($resta>0) {
-       return to_route('notas.historialPagos',$idr)->with('status','Nota con pago incompleto, no es posible entregar.');
-      }else{
-        DB::table('notas')->where('id',$idr)->update(['idEstado' => '16']);
-        return to_route('notas.show',$idr)->with('status','Nota marcada como entregada.');
-      }
-  return to_route('notas.index')->with('status','Nota marcada como entregada.');
+ $idr = $request->input('idNota');
+ $nota = nota::where('id', '=',$idr)->first();
+ $resta = $nota->restante;
+ if ($resta>0) {
+   return to_route('notas.historialPagos',$idr)->with('status','Nota con pago incompleto, no es posible entregar.');
+ }else{
+  DB::table('notas')->where('id',$idr)->update(['idEstado' => '16']);
+  return to_route('notas.show',$idr)->with('status','Nota marcada como entregada.');
+}
+return to_route('notas.index')->with('status','Nota marcada como entregada.');
 }
 
 public function historialPagos($id){
@@ -232,22 +232,22 @@ public function storepago(Request $request){
         $restante = $totalinicial-$importe;
         DB::table('notas')->where('id', $idr)->update(['restante' => $restante]);
         if ($restante>0) {
-        DB::table('notas')->where('id', $idr)->update(['idEstado' => '10']);
+          DB::table('notas')->where('id', $idr)->update(['idEstado' => '10']);
         }else{
-        DB::table('notas')->where('id', $idr)->update(['idEstado' => '15']);
+          DB::table('notas')->where('id', $idr)->update(['idEstado' => '15']);
         }
       }else{
         $restante = $totalrestante-$importe;
         DB::table('notas')->where('id', $idr)->update(['restante' => $restante]);
         if ($restante>0) {
-        DB::table('notas')->where('id', $idr)->update(['idEstado' => '10']);
+          DB::table('notas')->where('id', $idr)->update(['idEstado' => '10']);
         }else{
-        DB::table('notas')->where('id', $idr)->update(['idEstado' => '15']);
+          DB::table('notas')->where('id', $idr)->update(['idEstado' => '15']);
         }
       }
-        $cambio = $entregado-$importe;
-        $historia= new historialPago;
-        $historia->idNota = $idr;
+      $cambio = $entregado-$importe;
+      $historia= new historialPago;
+      $historia->idNota = $idr;
         $historia->idUsuarioSistema = $idr; //POR MODIFICAR USUARIOOOOOOOOOOOOOOOO
         $historia->importe = $importe;
         $historia->restante = $restante;
@@ -269,7 +269,7 @@ public function registrarPago(Request $request){
   $request->validate(
     ['importe'=> ['required','integer'],
     'importeentregado'=> ['required','integer'],//
-    ]);
+  ]);
 
   $idnota = $request->input('idNota');
   if ($idnota === null) {
@@ -290,17 +290,17 @@ public function registrarPago(Request $request){
         $restante = $totalinicial-$importe;
         DB::table('notas')->where('id', $idr)->update(['restante' => $restante]);
         if ($restante>0) {
-        DB::table('notas')->where('id', $idr)->update(['idEstado' => '10']);
+          DB::table('notas')->where('id', $idr)->update(['idEstado' => '10']);
         }else{
-        DB::table('notas')->where('id', $idr)->update(['idEstado' => '15']);
+          DB::table('notas')->where('id', $idr)->update(['idEstado' => '15']);
         }
       }else{
         $restante = $totalrestante-$importe;
         DB::table('notas')->where('id', $idr)->update(['restante' => $restante]);
         if ($restante>0) {
-        DB::table('notas')->where('id', $idr)->update(['idEstado' => '10']);
+          DB::table('notas')->where('id', $idr)->update(['idEstado' => '10']);
         }else{
-        DB::table('notas')->where('id', $idr)->update(['idEstado' => '15']);
+          DB::table('notas')->where('id', $idr)->update(['idEstado' => '15']);
         }
       }
       $cambio = $entregado-$importe;
