@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\NotaController;
+use App\Http\Controllers\PrendaController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AutheticatedSessionController;
@@ -14,9 +16,6 @@ Route::post('/ustore',[RegisteredUserController::class, 'ustore'])->name('user.s
 Route::post('/sesion',[AutheticatedSessionController::class, 'astore'])->name('session');
 Route::post('/terminar',[AutheticatedSessionController::class, 'destroy'])->name('logout');
 Route::get('/login',[RegisteredUserController::class, 'login'])->name('login');
-
-Route::view('/prendas','prendas.inicioPrendas')->name('prendas.inicioPrendas');
-Route::view('/servicios','servicios.inicioServicios')->name('servicios.inicioServicios');
 
 Route::view('/notas','notas.inicioNotas')->name('notas.inicioNotas');
 Route::get('/nuevanota',[NotaController::class, 'nuevanota'])->name('notas.nuevanota');
@@ -38,14 +37,27 @@ Route::post('/guardarpago',[NotaController::class, 'storepago'])->name('notas.st
 Route::get('/mostrar/{id}',[NotaController::class, 'show'])->name('notas.show');
 Route::patch('/entregaMenu',[NotaController::class, 'datosEntregaMenu'])->name('notas.datosEntregaMenu');
 Route::patch('/actualizarEntrega',[NotaController::class, 'updateCreate'])->name('notas.updateCreate');
+Route::post('/buscarNota',[NotaController::class, 'search'])->name('notas.search');
 
+Route::view('/crear','clientes.nuevo')->name('clientes.nuevo');
+Route::post('/storeCliente',[ClientesController::class, 'store'])->name('clientes.store');
+Route::view('/clientes','clientes.inicioClientes')->name('clientes.inicioClientes');
 Route::post('/editar',[ClientesController::class, 'editar'])->name('clientes.editar');
 Route::patch('/Update',[ClientesController::class, 'update'])->name('clientes.update');
-Route::post('/store',[ClientesController::class, 'store'])->name('cliente.store');
-Route::view('/nuevo','clientes.nuevo')->name('clientes.nuevo');
-Route::view('/clientes','clientes.inicioClientes')->name('clientes.inicioClientes');
 Route::post('/buscarCliente',[ClientesController::class, 'search'])->name('clientes.search');
 Route::delete('/eliminar/{idc}',[ClientesController::class, 'eliminarCliente'])->name('clientes.eliminarCliente');
+
+Route::view('/prendas','prendas.inicioPrendas')->name('prendas.inicioPrendas');
+Route::view('/nuevo','prendas.nuevo')->name('prenda.nuevo');
+Route::post('/store',[PrendaController::class, 'store'])->name('prendas.store');
+Route::post('/buscar',[PrendaController::class, 'show'])->name('prendas.show');
+Route::delete('delete/{id}',[PrendaController::class, 'destroy'])->name('prendas.delete');
+
+Route::view('/servicios','servicios.inicioServicios')->name('servicios.inicioServicios');
+Route::view('/nuevoServicio','servicios.nuevo')->name('servicios.create');
+Route::post('/storeServicio',[ServicioController::class, 'store'])->name('servicios.store');
+Route::post('/buscaServicio',[ServicioController::class, 'show'])->name('servicios.show');
+
 
 
 

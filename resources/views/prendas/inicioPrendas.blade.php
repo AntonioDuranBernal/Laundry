@@ -1,8 +1,7 @@
 <x-layouts.app title="Prendas" meta-description="prendas">
-
 	<div class="flex flex-wrap m-4">
 		<div class="w-full sm:w-4/5 md:w-4/5 lg:w-7/8 p-4 mb-1">
-			<form class="px-8 py-4 rounded" action="{{route('clientes.search')}}" method="POST">
+			<form class="px-8 py-4 rounded" action="{{route('prendas.show')}}" method="POST">
 				@csrf
 				<label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
 				<div class="relative">
@@ -15,10 +14,8 @@
 			</form>
 		</div>
 		<div class="w-full md:w-1/5 lg:w-1/5 xl:w-1/8 p-4 mb-1">
-			<form class="px-1 py-4 rounded" action="{{route('clientes.search')}}" method="POST">
-				@csrf
-				<button class="bg-blue-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-11 rounded inline-flex items-center" type="submit">Agregar</button>
-			</form>
+			<a class="inline-flex items-center px-12 py-6 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500"
+			href="{{route('prenda.nuevo')}}">Nuevo</a>
 		</div>
 	</div>
 </x-layouts.app>

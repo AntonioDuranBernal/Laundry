@@ -20,7 +20,6 @@ class ClientesController extends Controller
 }
 
 public function update(Request $request){
-
   $id = $request->input('id');
   $celular = $request->input('celular');
   $nombre = $request->input('nombre');
@@ -51,7 +50,6 @@ public function update(Request $request){
     [   'celular'=> ['required','digits:10','numeric','unique:clientes,celular'],
         'nombre'=> ['required','string']
       ]);
-
   $cliente= new cliente;
   $cliente->idEstado = '1';
   $cliente->nombre = $request->input('nombre');
