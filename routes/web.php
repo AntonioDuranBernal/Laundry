@@ -39,11 +39,14 @@ Route::get('/mostrar/{id}',[NotaController::class, 'show'])->name('notas.show');
 Route::patch('/entregaMenu',[NotaController::class, 'datosEntregaMenu'])->name('notas.datosEntregaMenu');
 Route::patch('/actualizarEntrega',[NotaController::class, 'updateCreate'])->name('notas.updateCreate');
 
+Route::post('/editar',[ClientesController::class, 'editar'])->name('clientes.editar');
+Route::patch('/Update',[ClientesController::class, 'update'])->name('clientes.update');
+Route::post('/store',[ClientesController::class, 'store'])->name('cliente.store');
+Route::view('/nuevo','clientes.nuevo')->name('clientes.nuevo');
 Route::view('/clientes','clientes.inicioClientes')->name('clientes.inicioClientes');
 Route::post('/buscarCliente',[ClientesController::class, 'search'])->name('clientes.search');
 Route::delete('/eliminar/{idc}',[ClientesController::class, 'eliminarCliente'])->name('clientes.eliminarCliente');
-Route::view('/registrarcliente','clientes.addCliente')->name('clientes.nuevo');
-Route::post('/agregarCliente',[ClientesController::class, 'agregar'])->name('clientes.agregar');
+
 
 
 

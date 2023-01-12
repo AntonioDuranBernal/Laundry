@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('idEstado');
             $table->string('nombre');
-            $table->integer('celular');
+            $table->string('celular');
             $table->timestamp('updated_at')->nullable();
             $table->timestamp('created_at')->nullable();
         });
