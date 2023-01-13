@@ -63,7 +63,8 @@ class ServicioController extends Controller
     ]);
     $n = Servicio::find($request->input('id'));
     if(is_null($n)){
-     return view('servicios.inicioServicios');
+    return to_route('servicios.inicioServicios')->with('status','Servicio no encontrado.');
+
      }
      return view ('servicios.show',['servicio' => $n]);
     }

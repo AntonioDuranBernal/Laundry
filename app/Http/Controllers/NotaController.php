@@ -148,7 +148,7 @@ public function indexdetallenotas($idr){
     //$id=rtrim($request->input('id'));
     $n = DB::table('notas')->where('id',$request->input('id') )->first();
     if(is_null($n)){
-     return view('inicio');
+         return to_route('inicio')->with('status','Nota no encontrada.');
    }
    $nd = DB::table('detalle_nota_servicios')->where('idNota', $request->input('id'))->get();
    return view ('notas.show',['nota'=>$n, 'detalles'=>$nd]);

@@ -35,7 +35,7 @@ public function update(Request $request){
     ]);
     $n = cliente::find($request->input('id'));
     if(is_null($n)){
-     return view('clientes.inicioClientes');
+    return to_route('clientes.inicioClientes')->with('status','Cliente no encontrado.');
     }
     return view ('clientes.show',['cliente' => $n]);
    }
