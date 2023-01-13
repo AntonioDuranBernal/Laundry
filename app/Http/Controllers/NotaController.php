@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use DateTime;
 use Session;
 use Illuminate\Http\Request;
+use App\Models\Prenda;
 use App\Models\nota;
 use App\Models\Servicio;
 use App\Models\detalleNotaServicio;
@@ -114,8 +115,8 @@ public function indexdetallenotas($idr){
     $detalle= new detalleNotaServicio;
     $detalle->idNota = $request->input('idNota');
     $idr = $detalle->idNota;
-    $costos = servicio::latest('costo')->where('idEmpresa', $request->input('costo'))->where('idServicio', $request->input('idServicio'))->where('idPrenda', $request->input('idElemento'))->first();
-    $cos = $costos->costo;
+    $registro = prenda::latest('costo')->where('idEmpresa', $request->input('costo'))->where('servicio', $request->input('idServicio'))->where('id', $request->input('idElemento'))->first();
+    $cos = $registro->costo;
     $co = (double)$cos;
 
     $detalle->cantidad = $request->input('cantidad');
@@ -195,8 +196,6 @@ public function store(Request $request){
   $nota->idEstado = '1';
   $nota->idUsuarioSistema = '1';
   $nota->fechaEntrega = $request->input('fechaEntrega');
-      //$nota->fechaSalida = '---';
-      //$nota->total = '0';
   $nota->idCliente = $request->input('idCliente');
   $nota->apunte = 'Sin apuntes';
   $nota->lugarEntrega = $request->input('lugarEntrega');

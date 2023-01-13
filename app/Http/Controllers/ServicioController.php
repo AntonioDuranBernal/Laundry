@@ -57,16 +57,15 @@ class ServicioController extends Controller
      * @param  \App\Models\Servicio  $servicio
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
-    {
+    public function show(Request $request){
     $request->validate(
       ['id'=> ['required','numeric'],
     ]);
     $n = Servicio::find($request->input('id'));
     if(is_null($n)){
      return view('servicios.inicioServicios');
-    }
-    return view ('servicios.show',['servicio' => $n]);
+     }
+     return view ('servicios.show',['servicio' => $n]);
     }
 
     /**

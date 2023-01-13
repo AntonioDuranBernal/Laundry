@@ -1,7 +1,7 @@
 <x-layouts.app title="Notas" meta-description="notas">
     <div class="flex flex-wrap m-4">
         <div class="w-full sm:w-4/5 md:w-4/5 lg:w-7/8 p-4 mb-1">
-            <form class="px-8 py-4 rounded" action="{{route('clientes.search')}}" method="POST">
+            <form class="px-8 py-4 rounded" action="{{route('notas.search')}}" method="POST">
                 @csrf
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
                 <div class="relative">

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('servicio');
             $table->double('costo');
             $table->string('descripcion');
+            $table->integer('idEmpresa')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->timestamp('created_at')->nullable();
         });
