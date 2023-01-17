@@ -18,6 +18,7 @@ Route::post('/terminar',[AutheticatedSessionController::class, 'destroy'])->name
 Route::get('/login',[RegisteredUserController::class, 'login'])->name('login');
 
 Route::view('/notas','notas.inicioNotas')->name('notas.inicioNotas');
+Route::post('/eliminar/{idr}',[NotaController::class, 'eliminar'])->name('notas.eliminar');//PROBAR SIN USAR
 Route::get('/nuevanota',[NotaController::class, 'nuevanota'])->name('notas.nuevanota');
 Route::post('/buscar',[NotaController::class, 'search'])->name('notas.search');
 Route::get('/listado',[NotaController::class, 'index'])->name('notas.index');

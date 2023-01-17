@@ -40,6 +40,7 @@ class PrendaController extends Controller
             'costo'=> ['required','min_digits:1','numeric'],
             'nombre'=> ['required','string'],
             'descripcion'=> ['required','string'],
+            'idEmpresa'=> ['required','min_digits:1','numeric'],
         ]);
 
         $prenda= new prenda;
@@ -47,6 +48,7 @@ class PrendaController extends Controller
         $prenda->costo = $request->input('costo');
         $prenda->descripcion = $request->input('descripcion');
         $prenda->servicio = $request->input('servicio');
+        $prenda->idEmpresa = $request->input('idEmpresa');
         $prenda->save();
 
         $idp = prenda::latest('id')->first();

@@ -5,6 +5,7 @@
 			<p>Servicio: {{$prenda->servicio}}</p>
 			<p>Costo: {{$prenda->costo}}</p>
 			<p>Descripción: {{$prenda->descripcion}}</p>
+			<p>ID Empresa: {{$prenda->idEmpresa}}</p>
 		</div>
 	</div>
 	<div class="max-w-xl px-4 py-4 mx-auto bg-white rounded shadow dark:bg-slate-800">

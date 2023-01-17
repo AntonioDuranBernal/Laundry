@@ -94,13 +94,12 @@ public function datosPago(Request $request){
   }
 }
 
-
 public function addDetalle($idr){
  return view('notas.addDetalle',['idr'=>$idr]);
 }
 
 public function indexdetallenotas($idr){
- $detalles = DB::table('detalle_nota_servicios')->where('idNota', $idr)->get();
+     $detalles = DB::table('detalle_nota_servicios')->where('idNota', $idr)->get();
      return view('notas.createDetallesNota',['detalles'=>$detalles,'idr'=>$idr]);//,$idr
    }
 
@@ -137,6 +136,11 @@ public function indexdetallenotas($idr){
   }
 
   public function cancelarNota(Nota $idNota){
+    $idNota->delete();
+    return to_route('notas.index')->with('status','Nota cancelada.');
+  }
+
+    public function eliminar(Nota $idNota){
     $idNota->delete();
     return to_route('notas.index')->with('status','Nota cancelada.');
   }

@@ -29,9 +29,8 @@
 					m-0
 					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" type="text" name="servicio" autofocus="autofocus">
 					<option selected>1</option>
-					<option value="1">2</option>
-					<option value="2">3</option>
-					<option value="3">4</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
 				</select>
 			</div>
 		</div>
@@ -42,10 +41,17 @@
 			<small class="font-bold text-red-500/80">{{$message}}</small>
 			@enderror
 		</div>
-					<div class="flex flex-col rounded-md shadow-sm border-slate-800 justify-center">
+			<div class="flex flex-col rounded-md shadow-sm border-slate-800 justify-center">
 				<span class="font-serif text-slate-800 dark:text-slate-400">Descripción</span>
 				<input class="rounded-md shadow-sm border-slate-800 dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 focus:ring focus:ring-slate-300 dark:focus:ring-slate-800 focus:ring-opacity-50 dark:focus:border-slate-700 focus:border-slate-300 dark:bg-slate-800 dark:border-slate-900 dark:text-slate-100 dark:placeholder:text-slate-400" type="text" name="descripcion">
 				@error('descripcion')
+				<small class="font-bold text-red-500/80">{{$message}}</small>
+				@enderror
+			</div>
+			<div class="flex flex-col rounded-md shadow-sm border-slate-800 justify-center">
+				<span class="font-serif text-slate-800 dark:text-slate-400">ID Empresa</span>
+				<input class="rounded-md shadow-sm border-slate-800 dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 focus:ring focus:ring-slate-300 dark:focus:ring-slate-800 focus:ring-opacity-50 dark:focus:border-slate-700 focus:border-slate-300 dark:bg-slate-800 dark:border-slate-900 dark:text-slate-100 dark:placeholder:text-slate-400" type="text" name="idEmpresa">
+				@error('idEmpresa')
 				<small class="font-bold text-red-500/80">{{$message}}</small>
 				@enderror
 			</div>
