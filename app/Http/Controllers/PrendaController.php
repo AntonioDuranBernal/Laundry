@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Prenda;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class PrendaController extends Controller
 {
     /**
@@ -11,10 +11,12 @@ class PrendaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
+    public function inicioPrendas(){
+        $elementos = prenda::get();
+        return view('prendas.inicioPrendas', ['elementos'=>$elementos]);
+  }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -36,12 +38,12 @@ class PrendaController extends Controller
     {
         $request->validate(
             [
-            'servicio'=> ['required','min_digits:1','numeric'],
-            'costo'=> ['required','min_digits:1','numeric'],
-            'nombre'=> ['required','string'],
-            'descripcion'=> ['required','string'],
-            'idEmpresa'=> ['required','min_digits:1','numeric'],
-        ]);
+                'servicio'=> ['required','min_digits:1','numeric'],
+                'costo'=> ['required','min_digits:1','numeric'],
+                'nombre'=> ['required','string'],
+                'descripcion'=> ['required','string'],
+                'idEmpresa'=> ['required','min_digits:1','numeric'],
+            ]);
 
         $prenda= new prenda;
         $prenda->nombre = $request->input('nombre');
@@ -64,15 +66,20 @@ class PrendaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request){
-    $request->validate(
-      ['id'=> ['required','numeric'],
-    ]);
-    $n = prenda::find($request->input('id'));
-    if(is_null($n)){
-    return to_route('prendas.inicioPrendas')->with('status','Prenda no encontrada.');
+        $request->validate(
+          ['id'=> ['required','numeric'],
+      ]);
+        $n = prenda::find($request->input('id'));
+        if(is_null($n)){
+            return to_route('prendas.inicioPrendas')->with('status','Prenda no encontrada.');
+        }
+        return view ('prendas.show',['prenda' => $n]);
     }
-    return view ('prendas.show',['prenda' => $n]);
-    }
+
+    public function ver($idr){
+     $n = prenda::find($idr);
+     return view('prendas.show',['prenda'=>$n]);//,$idr
+   }
 
     /**
      * Show the form for editing the specified resource.
@@ -105,8 +112,8 @@ class PrendaController extends Controller
      */
 
     public function destroy(Prenda $id){
-    $id->delete();
-    return to_route('prendas.inicioPrendas')->with('status','Prenda eliminada.');
+        $id->delete();
+        return to_route('prendas.inicioPrendas')->with('status','Prenda eliminada.');
     }
 
 }

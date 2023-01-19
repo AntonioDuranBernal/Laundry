@@ -65,4 +65,14 @@ public function update(Request $request){
     return view ('clientes.nuevo');
   }
 
+ public function inicioClientes(){
+        $elementos = cliente::get();
+        return view('clientes.inicioClientes', ['elementos'=>$elementos]);
+  }
+
+    public function ver($idr){
+     $n = cliente::find($idr);
+     return view('clientes.show',['cliente'=>$n]);//,$idr
+   }
+
 }

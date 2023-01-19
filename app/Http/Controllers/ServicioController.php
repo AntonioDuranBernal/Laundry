@@ -12,10 +12,15 @@ class ServicioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
+  public function inicioServicios(){
+        $elementos = Servicio::get();
+        return view('servicios.inicioServicios', ['elementos'=>$elementos]);
+  }
+
+    public function ver($idr){
+     $n = Servicio::find($idr);
+     return view('servicios.show',['servicio'=>$n]);//,$idr
+   }
 
     /**
      * Show the form for creating a new resource.
