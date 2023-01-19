@@ -1,10 +1,10 @@
 <x-layouts.appCreacion title="Datos de cliente" meta-description="Nuevo cliente">
-	<h1 class="my-4 font-serif text-3xl text-center text-sky-600 dark:text-sky-500">Datos de cliente</h1>
+	<h1 class="my-4 font-serif text-3xl text-center text-sky-800 dark:text-sky-500">Datos de cliente</h1>
 	<form class="max-w-xl px-8 py-4 mx-auto bg-white rounded shadow dark:bg-slate-800"  action="{{route('clientes.store')}}" method="POST">
 		@csrf
 		<div class="space-y-4">
 			<div class="flex flex-col rounded-md shadow-sm border-slate-800 justify-center">
-				<span class="font-serif text-slate-800 dark:text-slate-400">Nombre completo</span>
+				<span class="font-serif text-slate-800 dark:text-slate-400">Nombre</span>
 				<input class="rounded-md shadow-sm border-slate-800 dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 focus:ring focus:ring-slate-300 dark:focus:ring-slate-800 focus:ring-opacity-50 dark:focus:border-slate-700 focus:border-slate-300 dark:bg-slate-800 dark:border-slate-900 dark:text-slate-100 dark:placeholder:text-slate-400" type="text" name="nombre">
 				@error('nombre')
 				<small class="font-bold text-red-500/80">{{$message}}</small>
