@@ -7,7 +7,7 @@
 		@csrf
 		<div class="space-y-4 px-20 md:flex-none md:w-90 ">
 			<div class="rounded-md shadow-sm border-slate-800 justify-center">
-				<span class="font-serif text-slate-800 dark:text-slate-400">ID Cliente</span>
+				<span class="font-serif text-slate-800 dark:text-slate-400">Celular cliente</span>
 				<div class="flex flex-col">
 					<select class="form-select appearance-none
 					block
@@ -57,7 +57,10 @@
 				ease-in-out
 				m-0
 				focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example"  type="text" name="lugarEntrega" value="{{$lugarEntrega}}">
-				<option selected>2</option>
+				<option selected value="1">Sucursal Brenamiel</option>
+				<option value="2">Sucursal Prueblo Nuevo</option>
+				<option value="3">Sucursal Centro</option>
+				<option value="4">Sucursal Etla</option>
 			</select>
 		</div>
 	</div>
