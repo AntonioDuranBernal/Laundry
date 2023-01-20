@@ -3,10 +3,10 @@
 	<h1 class="my-4 font-serif text-3xl text-center text-sky-800 dark:text-sky-500">Datos de entrega</h1>
 	<form flex-grow class="cpx-4 mb-6 bg-white rounded shadow dark:bg-slate-800" action="{{route('notas.updateCreate')}}" method="POST">
 		@csrf @method('PATCH')
-		<input id="idNota" name="idNota" type="hidden"  value={{$idNota}}>
+		<input id="idNota" name="idNota" type="hidden"  value={{$nota->id}}>
 		<div class="space-y-4 px-20 md:flex-none md:w-90 ">
 			<div class="rounded-md shadow-sm border-slate-800 justify-center">
-				<span class="font-serif text-slate-800 dark:text-slate-400">ID Cliente</span>
+				<span class="font-serif text-slate-800 dark:text-slate-400">Celular cliente</span>
 				<div class="flex flex-col">
 					<select class="form-select appearance-none
 					block
@@ -22,18 +22,17 @@
 					transition
 					ease-in-out
 					m-0
-					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" type="text" name="idCliente" autofocus="autofocus" value="{{$idCliente}}">
-					<option selected>{{$idCliente}}</option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
+					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" type="text" name="idCliente" autofocus="autofocus" value="{{$datoscliente->id}}">
+					<option value="{{$datoscliente->id}}" selected>{{$datoscliente->celular}}</option>
+					@foreach($clientes as $cliente)
+					<option value="{{$cliente->id}}">{{$cliente->celular}}</option>
+					@endforeach
 				</select>
 			</div>
 		</div>
 		<label class="flex flex-col">
 			<span class="font-serif text-slate-800 dark:text-slate-400">Fecha de entrega</span>
-			<input class="rounded-md shadow-sm border-slate-800 dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 focus:ring focus:ring-slate-300 dark:focus:ring-slate-800 focus:ring-opacity-50 dark:focus:border-slate-700 focus:border-slate-300 dark:bg-slate-800 dark:border-slate-900 dark:text-slate-100 dark:placeholder:text-slate-400" type="text" name="fechaEntrega" value="{{$fechaEntrega}}">
+			<input class="rounded-md shadow-sm border-slate-800 dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 focus:ring focus:ring-slate-300 dark:focus:ring-slate-800 focus:ring-opacity-50 dark:focus:border-slate-700 focus:border-slate-300 dark:bg-slate-800 dark:border-slate-900 dark:text-slate-100 dark:placeholder:text-slate-400" type="text" name="fechaEntrega" value="{{$nota->fechaEntrega}}">
 			@error('fechaEntrega')
 			<small class="font-bold text-red-500/80">{{$message}}</small>
 			@enderror
@@ -56,8 +55,8 @@
 				transition
 				ease-in-out
 				m-0
-				focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example"  type="text" name="lugarEntrega" value="{{$lugarEntrega}}">
-				<option selected>{{$lugarEntrega}}</option>
+				focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example"  type="text" name="lugarEntrega" value="{{$nota->lugarEntrega}}">
+				<option selected>{{$nota->lugarEntrega}}</option>
 				<option value="1">1</option>
 				<option value="2">2</option>
 			</select>

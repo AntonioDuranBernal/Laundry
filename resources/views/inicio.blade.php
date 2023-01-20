@@ -16,7 +16,7 @@
         </div>
         <div class="w-full md:w-1/5 lg:w-1/5 xl:w-1/8 p-4 mb-1">
             <a class="inline-flex items-center px-12 py-7 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500"
-            href="{{route('notas.nuevanota')}}">Nueva nota</a>
+            href="{{route('notas.nuevanota')}}">Crear</a>
         </div>
     </div>
 </x-layouts.app>

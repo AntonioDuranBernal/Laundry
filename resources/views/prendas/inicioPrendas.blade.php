@@ -15,7 +15,7 @@
 		</div>
 		<div class="w-full md:w-1/5 lg:w-1/5 xl:w-1/8 p-4 mb-1">
 			<a class="inline-flex items-center px-12 py-7 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500"
-			href="{{route('prenda.nuevo')}}">Agregar nuevo</a>
+			href="{{route('prenda.nuevo')}}">Crear</a>
 		</div>
 	<div class="w-full sm:w-4/5 md:w-4/5 lg:w-7/8 p-4 mb-1">
 		<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">

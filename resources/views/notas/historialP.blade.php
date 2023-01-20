@@ -1,5 +1,5 @@
-<x-layouts.appCreacion title="Historial" meta-description="Historial">
-	<div flex-grow class="mt-6 grid grid-cols-1 divide-y max-w-xl py-4 mx-auto bg-white rounded shadow dark:bg-slate-800">
+<x-layouts.app title="Historial" meta-description="Historial">
+	<div flex-grow class="mt-1 grid grid-cols-1 divide-y max-w-xl py-2 mx-auto bg-white rounded shadow dark:bg-slate-800">
 		<div class="md:flex-none ">
 			<div class="inline-block min-w-full sm:px-8 lg:px-8">
 				<div class="overflow-hidden">

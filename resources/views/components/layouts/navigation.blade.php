@@ -1,6 +1,6 @@
 @auth
 <nav
-class="w-screen overflow-scroll bg-white border-b dark:bg-slate-900 border-slate-900/10 lg:px-8 dark:border-slate-300/10 lg:mx-0">
+class="w-screen bg-white lg:px-8 dark:border-slate-300/10 lg:mx-0">
 <div class="px-4 mx-auto max-w-7xl sm:px-15 lg:px-20 ">
     <div class="relative flex items-center justify-between h-20">
         <div class="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">

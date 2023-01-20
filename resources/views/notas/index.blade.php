@@ -1,4 +1,4 @@
-<x-layouts.app title="Notas" meta-description="notas">
+<x-layouts.app title="Opciones" meta-description="notas">
     <aside class="w-64" aria-label="Sidebar">
        <div class="px-3 py-4 overflow-y-auto rounded bg-gray-50 dark:bg-gray-800">
           <ul class="space-y-2">

@@ -1,6 +1,9 @@
 <x-layouts.appCreacion title="Nueva nota" meta-description="Nueva nota">
-	<h1 class="my-4 font-serif text-3xl text-center text-sky-800 dark:text-sky-500">Datos de entrega</h1>
-	<form flex-grow class="cpx-4 mb-6 bg-white rounded shadow dark:bg-slate-800"  action="{{route('notas.storeDatosCliente')}}" method="POST">
+<div  class="mt-1 grid grid-cols-1 divide-y max-w-xl py-2 mx-auto bg-white">
+	<div class="md:flex-none ">
+	<h1 class="my-2 font-serif text-3xl text-center text-sky-800 dark:text-sky-500">Datos de entrega</h1>
+
+	<form flex-grow class="cpx-4 mb-2 bg-white rounded shadow dark:bg-slate-800"  action="{{route('notas.storeDatosCliente')}}" method="POST">
 		@csrf
 		<div class="space-y-4 px-20 md:flex-none md:w-90 ">
 			<div class="rounded-md shadow-sm border-slate-800 justify-center">
@@ -20,11 +23,11 @@
 					transition
 					ease-in-out
 					m-0
-					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" type="text" name="idCliente" autofocus="autofocus" value="{{$idCliente}}">
-					<option selected>1</option>
-					<option value="1">2</option>
-					<option value="2">3</option>
-					<option value="3">4</option>
+					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" type="text" name="idCliente" autofocus="autofocus">
+					<option value="1" selected>General</option>
+					@foreach($clientes as $cliente)
+					<option value="{{$cliente->id}}">{{$cliente->celular}}</option>
+					@endforeach
 				</select>
 			</div>
 		</div>
@@ -67,4 +70,8 @@
 	</div>
 </div>
 </form>
-</x-layouts.app>
+</div>
+</div>
+</x-layouts.appCreacion>
+
+

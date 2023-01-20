@@ -1,4 +1,4 @@
-<x-layouts.appCreacion :title="$nota->id" :meta-description="$nota->id">
+<x-layouts.appCreacion :title="$nota->id" meta-description="Nota">
 	<nav
 	class="w-screen overflow-scroll bg-white border-b dark:bg-slate-900 border-slate-900/10 lg:px-8 dark:border-slate-300/10 lg:mx-0">
 	<div class="px-4  mx-auto max-w-7xl sm:px-16 lg:px-20 ">
@@ -88,11 +88,11 @@
 			<p>Restante: {{$nota->restante}}</p>
 		</div>
 	</div>
-					<div class="mb-3 px-8 space-y-2">
-						<div class="flex items-center justify-between mt-4">
-							<a class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" href="{{route('inicio')}}">Regresar</a>
-							<a class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" href="{{route('notas.historialPagos',$nota->id)}}">Pagos</a>
-						</div>
-					</div>
+	<div class="mb-3 px-8 space-y-2">
+		<div class="flex items-center justify-between mt-4">
+			<a class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" href="{{route('inicio')}}">Regresar</a>
+			<a class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" href="{{route('notas.historialPagos',$nota->id)}}">Pagos</a>
+		</div>
+	</div>
 </div>
 </x-layouts.app>

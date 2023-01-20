@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Prenda;
 use App\Models\nota;
 use App\Models\Servicio;
+use App\Models\cliente;
 use App\Models\detalleNotaServicio;
 use App\Models\historialPago;
 
@@ -29,7 +30,8 @@ class NotaController extends Controller
    date_default_timezone_set('America/Mexico_City');
    $fecha_actual = date("Y-m-d h:m:s");
    $stringDate = date("Y-m-d",strtotime($fecha_actual."+ 3 days"));
-   return view('notas.create', ['fechaEntrega'=>$stringDate,'lugarEntrega'=>1,'idCliente'=>1]);
+   $clientes = cliente::get();
+   return view('notas.create',['fechaEntrega'=>$stringDate,'lugarEntrega'=>1,'idCliente'=>1,'clientes'=>$clientes]);
  }
 
  public function index(){
@@ -41,8 +43,17 @@ class NotaController extends Controller
   date_default_timezone_set('America/Mexico_City');
   $fecha_actual = date("Y-m-d h:m:s");
   $stringDate = date("Y-m-d",strtotime($fecha_actual."-1 days"));
-  $todos = historialPago::where('importe','>','0')->get();
   $todos = historialPago::where('created_at','>',$stringDate)->get();
+  return view('registro.ingresos',['todos'=>$todos]);
+}
+
+public function entreFechas(Request $request){
+  $inicio = $request->input('inicio');
+  $fin = $request->input('fin');
+  $fechainicio = date("Y-m-d",strtotime($inicio));
+  $fechafin = date("Y-m-d",strtotime($fin."+1 days"));
+  $todos = historialPago::where('created_at','>=',$fechainicio)->where('created_at','<=',$fechafin)->get();
+  //$todos = historialPago::where('created_at','>',$fechainicio)->get();
   return view('registro.ingresos',['todos'=>$todos]);
 }
 
@@ -51,7 +62,9 @@ public function datosEntregaMenu(Request $request){
   $fechaEntrega = $n->fechaEntrega;
   $lugarEntrega = $n->lugarEntrega;
   $idCliente = $n->idCliente;
-  return view ('notas.updateCreate',['idNota'=>$request->input('idNota'),'idCliente'=>$idCliente,'fechaEntrega'=>$fechaEntrega,'lugarEntrega'=>$lugarEntrega]);
+  $clientes = DB::table('clientes')->get();
+  $DatosCliente = DB::table('clientes')->where('id',$idCliente)->first();
+  return view ('notas.updateCreate',['nota'=>$n,'datoscliente'=>$DatosCliente,'clientes'=>$clientes]);
 }
 
 public function updateCreate(Request $request){
@@ -59,6 +72,7 @@ public function updateCreate(Request $request){
   $fechaEntrega = $request->input('fechaEntrega');
   $lugarEntrega = $request->input('lugarEntrega');
   $idCliente = $request->input('idCliente');
+
   DB::table('notas')->where('id',$id)->update(['fechaEntrega' =>$fechaEntrega]);
   DB::table('notas')->where('id',$id)->update(['lugarEntrega' =>$lugarEntrega]);
   DB::table('notas')->where('id',$id)->update(['idCliente' =>$idCliente]);

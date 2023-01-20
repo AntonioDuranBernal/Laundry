@@ -24,6 +24,7 @@ Route::post('/buscar',[NotaController::class, 'search'])->name('notas.search');
 
 Route::get('/listado',[NotaController::class, 'index'])->name('notas.index');
 Route::get('/ingresos',[NotaController::class, 'ingresos'])->name('archivo.ingresos');
+Route::post('/fechasIngreso',[NotaController::class, 'entreFechas'])->name('archivo.entreFechas');
 
 Route::patch('/creando',[NotaController::class, 'store'])->name('notas.store');
 Route::post('/datosEntrega',[NotaController::class, 'storeDatosCliente'])->name('notas.storeDatosCliente');
