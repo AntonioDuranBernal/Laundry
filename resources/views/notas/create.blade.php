@@ -24,9 +24,8 @@
 					ease-in-out
 					m-0
 					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" type="text" name="idCliente" autofocus="autofocus">
-					<option value="1" selected>General</option>
-					@foreach($clientes as $cliente)
-					<option value="{{$cliente->id}}">{{$cliente->celular}}</option>
+					@foreach($cliente as $c)
+					<option value="{{$c->id}}">{{$c->celular}}</option>
 					@endforeach
 				</select>
 			</div>

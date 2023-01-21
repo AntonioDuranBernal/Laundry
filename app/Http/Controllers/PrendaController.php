@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Prenda;
+use App\Models\Servicio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class PrendaController extends Controller
@@ -14,19 +15,12 @@ class PrendaController extends Controller
     public function inicioPrendas(){
         $elementos = prenda::get();
         return view('prendas.inicioPrendas', ['elementos'=>$elementos]);
-  }
-
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
+
+    public function nuevo(){
+      $servicios = Servicio::get();
+      return view('prendas.nuevo',['servicios'=>$servicios]);
+  }
 
     /**
      * Store a newly created resource in storage.
@@ -77,9 +71,9 @@ class PrendaController extends Controller
     }
 
     public function ver($idr){
-     $n = prenda::find($idr);
+       $n = prenda::find($idr);
      return view('prendas.show',['prenda'=>$n]);//,$idr
-   }
+ }
 
     /**
      * Show the form for editing the specified resource.

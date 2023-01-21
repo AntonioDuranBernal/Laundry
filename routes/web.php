@@ -46,6 +46,7 @@ Route::post('/buscarNota',[NotaController::class, 'search'])->name('notas.search
 
 Route::view('/crear','clientes.nuevo')->name('clientes.nuevo');
 Route::post('/storeCliente',[ClientesController::class, 'store'])->name('clientes.store');
+Route::get('/cliente/{cel}',[ClientesController::class, 'paranota'])->name('clientes.paranota');
 
 Route::get('/clientesInicio',[ClientesController::class, 'inicioClientes'])->name('clientes.inicioClientes');
 Route::get('/VerCliente/{id}',[ClientesController::class, 'ver'])->name('clientes.ver');
@@ -56,7 +57,7 @@ Route::delete('/eliminar/{idc}',[ClientesController::class, 'eliminarCliente'])-
 
 Route::get('/prendasInicio',[PrendaController::class, 'inicioPrendas'])->name('prendas.inicioPrendas');
 Route::get('/VerPrenda/{id}',[PrendaController::class, 'ver'])->name('prendas.ver');
-Route::view('/nuevo','prendas.nuevo')->name('prenda.nuevo');
+Route::get('/nuevo',[PrendaController::class, 'nuevo'])->name('prenda.nuevo');
 Route::post('/store',[PrendaController::class, 'store'])->name('prendas.store');
 Route::post('/buscar',[PrendaController::class, 'show'])->name('prendas.show');
 Route::delete('delete/{id}',[PrendaController::class, 'destroy'])->name('prendas.delete');

@@ -30,8 +30,8 @@ class NotaController extends Controller
    date_default_timezone_set('America/Mexico_City');
    $fecha_actual = date("Y-m-d h:m:s");
    $stringDate = date("Y-m-d",strtotime($fecha_actual."+ 3 days"));
-   $clientes = cliente::get();
-   return view('notas.create',['fechaEntrega'=>$stringDate,'lugarEntrega'=>1,'idCliente'=>1,'clientes'=>$clientes]);
+   $clientes = cliente::get();//segun elcliente se pone lugar de entrega
+   return view('notas.create',['fechaEntrega'=>$stringDate,'lugarEntrega'=>1,'cliente'=>$clientes]);
  }
 
  public function index(){
@@ -64,7 +64,7 @@ public function datosEntregaMenu(Request $request){
   $idCliente = $n->idCliente;
   $clientes = DB::table('clientes')->get();
   $DatosCliente = DB::table('clientes')->where('id',$idCliente)->first();
-  return view ('notas.updateCreate',['nota'=>$n,'datoscliente'=>$DatosCliente,'clientes'=>$clientes]);
+  return view ('notas.updateCreate',['nota'=>$n,'datoscliente'=>$DatosCliente,'cliente'=>$clientes]);
 }
 
 public function updateCreate(Request $request){
@@ -162,7 +162,7 @@ public function indexdetallenotas($idr){
 
 public function cancelarNota(Nota $idNota){
   $idNota->delete();
-  return to_route('notas.index')->with('status','Nota cancelada.');
+  return to_route('inicio')->with('status','Nota cancelada.');
 }
 
 public function eliminar(Nota $idNota){

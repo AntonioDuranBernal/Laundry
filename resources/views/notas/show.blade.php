@@ -75,7 +75,7 @@
 							{{$detalles->descripcion}}
 						</td>
 						<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-							{{$detalles->subtotal}}
+							$ {{$detalles->subtotal}}
 						</td>
 					</tr class="bg-white border-b">
 					@endforeach

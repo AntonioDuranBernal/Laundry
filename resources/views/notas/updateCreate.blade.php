@@ -22,10 +22,10 @@
 					transition
 					ease-in-out
 					m-0
-					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" type="text" name="idCliente" autofocus="autofocus" value="{{$datoscliente->id}}">
+					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" type="text" name="idCliente" autofocus="autofocus">
 					<option value="{{$datoscliente->id}}" selected>{{$datoscliente->celular}}</option>
-					@foreach($clientes as $cliente)
-					<option value="{{$cliente->id}}">{{$cliente->celular}}</option>
+					@foreach($cliente as $c)
+					<option value="{{$c->id}}">{{$c->celular}}</option>
 					@endforeach
 				</select>
 			</div>
@@ -63,7 +63,7 @@
 		</div>
 	</div>
 	<div class="flex items-center justify-between mt-2">
-		<a class="mb-4 text-sm font-semibold underline border-2 border-transparent rounded dark:text-slate-300 text-slate-600 focus:border-slate-500 focus:outline-none" href="{{route('clientes.nuevo')}}">Registrar cliente</a>
+
 
 		<button class="mb-4 inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" type="submit">Siguiente</button>
 	</div>
