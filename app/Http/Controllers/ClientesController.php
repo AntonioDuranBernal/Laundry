@@ -31,13 +31,14 @@ class ClientesController extends Controller
 
   public function search(Request $request){
    $request->validate(
-    ['id'=> ['required','numeric'],
+    ['celular'=> ['required','numeric'],
   ]);
-   $n = cliente::find($request->input('id'));
-   if(is_null($n)){
+   //$n = cliente::find($request->input('celular'));
+   $t = DB::table('clientes')->where('celular',$request->input('celular'))->first();
+   if(is_null($t)){
     return to_route('clientes.inicioClientes')->with('status','Cliente no encontrado.');
   }
-  return view ('clientes.show',['cliente' => $n]);
+  return view ('clientes.show',['cliente' => $t]);
 }
 
 public function eliminarCliente(cliente $idc){

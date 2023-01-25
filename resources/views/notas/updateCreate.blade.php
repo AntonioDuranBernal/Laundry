@@ -56,9 +56,10 @@
 				ease-in-out
 				m-0
 				focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example"  type="text" name="lugarEntrega" value="{{$nota->lugarEntrega}}">
-				<option selected>{{$nota->lugarEntrega}}</option>
-				<option value="1">1</option>
-				<option value="2">2</option>
+				<option selected value="1">Sucursal Brenamiel</option>
+				<option value="2">Sucursal Prueblo Nuevo</option>
+				<option value="3">Sucursal Centro</option>
+				<option value="4">Sucursal Etla</option>
 			</select>
 		</div>
 	</div>
