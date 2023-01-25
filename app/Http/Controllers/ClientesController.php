@@ -60,7 +60,8 @@ public function store(Request $request){
   $idc = cliente::latest('id')->first();
   $idr = $idc->id;
   session()->flash('status',"Celular cliente: $cel Id cliente: $idr");
-  return to_route('clientes.paranota',$cel);
+  return to_route('sendMessage');
+  //return to_route('clientes.paranota',$cel);
 }
 
 public function paranota($cel){

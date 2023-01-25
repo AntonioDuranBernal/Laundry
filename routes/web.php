@@ -4,9 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\NotaController;
 use App\Http\Controllers\PrendaController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AutheticatedSessionController;
+
+Route::get('/send-message',[TestController::class, 'sendMessage'])->name('sendMessage');
 
 Route::get('inicio',[NotaController::class, 'inicio'])->name('inicio');
 Route::get('/',[NotaController::class, 'welcome'])->name('welcome');
