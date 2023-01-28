@@ -48,7 +48,7 @@ public function eliminarCliente(cliente $idc){
 
 public function store(Request $request){
   $request->validate(
-    [   'celular'=> ['required','digits:10','numeric','unique:clientes,celular'],
+    [   'celular'=> ['required','digits:12','numeric','unique:clientes,celular'],
     'nombre'=> ['required','string']
   ]);
   $cliente= new cliente;
@@ -60,8 +60,8 @@ public function store(Request $request){
   $idc = cliente::latest('id')->first();
   $idr = $idc->id;
   session()->flash('status',"Celular cliente: $cel Id cliente: $idr");
-  return to_route('sendMessage');
-  //return to_route('clientes.paranota',$cel);
+  //return to_route('primerMensajePlantilla');
+  return to_route('primerMensajePlantilla',$cel);
 }
 
 public function paranota($cel){

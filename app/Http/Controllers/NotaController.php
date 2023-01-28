@@ -67,6 +67,23 @@ public function datosEntregaMenu(Request $request){
   return view ('notas.updateCreate',['nota'=>$n,'datoscliente'=>$DatosCliente,'cliente'=>$clientes]);
 }
 
+public function confirmado(Request $request){
+  $n = DB::table('notas')->where('id',$request->input('idNota'))->first();
+  $idCliente = $n->idCliente;
+
+  $nota = "
+    Tintorería Camisas x1 $40
+    Lavandería Kilo de ropa x2 $30
+   ";
+
+  $DatosCliente = DB::table('clientes')->where('id',$idCliente)->first();
+  $cel = $DatosCliente->celular;
+  DB::table('notas')->where('id',$request->input('idNota'))->update(['idEstado' =>25]);
+  session()->flash('status',"Nota $request->input('idNota'), confirmada, mensaje enviado");
+  return to_route('AdelantoDado',['numero'=>$cel,'nota'=>$nota]);
+}
+
+
 public function updateCreate(Request $request){
   $id = $request->input('idNota');
   $fechaEntrega = $request->input('fechaEntrega');

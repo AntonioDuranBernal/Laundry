@@ -7,24 +7,80 @@ use Illuminate\Http\Request;
 class TestController extends Controller
 {
 
-    public function sendMessage(){
+public function primerMensajePlantilla($cel){
+        $token = 'EABKvFe5F8wsBAEO2Q73dilWaJAufyV8m4KZCZC6Rm9sVuirmKHrW5W30RAQFjnkr7VttHO2Bfk1gPGrKPpyZCF1ZCSBUhMhxeUEOstOzwnrIcaUZB7kq7ni7nUVOYy5lpgTogoxODKUhC0ZBzIzXzoFrqJc6p2fAiam7tEZBHf0184jQP9T5sfIZAOPgmCZAvST6z11ZCrB2nZBgwZDZD';
+        $phoneId = '106567539007218';
+        $version = 'v15.0';
+        //$cel = 529512419458;
+        $body = "Para registrarte responde SI a este mensaje, gracias. ";
         try{
 
-            $token = 'EABKvFe5F8wsBAGexYiB84iZBkzAn3hFlp90uFLhXvp29rMBFCdZCMwFa0aFDd87kLW7HNWkXQrZBDFY2CCvlp1yZBT28KTNMPezZAiDxjC97nsXLz6qXtuZAwA1YU1K3zwVo6AXbMjKZAW0OajrDaZAjZCDLXicID3FGvXr5Ep6sZCZAESwfmeJ3qJS8ZCNZAKLK97gxVOwiZBwAPBXAZDZD';
-            $phoneId = '106567539007218';
-            $version = 'v15.0';
-            $payload = [
+           $payload = [
               "messaging_product" => "whatsapp",
               "recipient_type" => "individual",
-              "to" => "529512419458",
+              "to" => $cel,
               "type" => "text",
               "text" => [
                 "preview_url" => false,
-                "body" => "Registro correcto"
+                "body" => $body
+            ]
+        ];
+
+        /*$payload = [
+          "messaging_product" => "whatsapp",
+          "to" => $cel,
+          "type" => "template",
+          "template" => [
+            "name" => "hello_world",
+            "language" => [
+              "code" => "es_US"
+          ]
+       ]
+       ];*/
+
+        $message = Http::withToken($token)->post('https://graph.facebook.com/' . $version . '/' . $phoneId . '/messages',$payload)->throw()->json();
+
+        /*return response()->json([
+            'success' => true,
+            'data' => $message,
+        ], 200);*/
+
+        return to_route('clientes.paranota',$cel);
+       //return to_route('clientes.inicioClientes');
+
+    }catch(Exception $e){
+      return response()->json([
+        'success' => false,
+        'error' => $e->$getMessage(),
+    ], 500);
+  }
+}
+
+public function AdelantoDado($cel,$nota){
+        $token = 'EABKvFe5F8wsBAEO2Q73dilWaJAufyV8m4KZCZC6Rm9sVuirmKHrW5W30RAQFjnkr7VttHO2Bfk1gPGrKPpyZCF1ZCSBUhMhxeUEOstOzwnrIcaUZB7kq7ni7nUVOYy5lpgTogoxODKUhC0ZBzIzXzoFrqJc6p2fAiam7tEZBHf0184jQP9T5sfIZAOPgmCZAvST6z11ZCrB2nZBgwZDZD';
+        //$cel="529512419458";
+        $phoneId = '106567539007218';
+        $version = 'v15.0';
+        //$body="Se realizo el pago de la nota";
+        try{
+            $payload = [
+              "messaging_product" => "whatsapp",
+              "recipient_type" => "individual",
+              "to" => $cel,
+              "type" => "text",
+              "text" => [
+                "preview_url" => false,
+                "body" => $nota
             ]
         ];
         $message = Http::withToken($token)->post('https://graph.facebook.com/' . $version . '/' . $phoneId . '/messages',$payload)->throw()->json();
-        return to_route('clientes.inicioClientes');
+
+        /*return response()->json([
+            'success' => true,
+            'data' => $message,
+        ], 200);*/
+
+        return to_route('inicio');
 
     }catch(Exception $e){
       return response()->json([

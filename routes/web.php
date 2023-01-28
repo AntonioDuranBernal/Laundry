@@ -9,7 +9,8 @@ use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AutheticatedSessionController;
 
-Route::get('/send-message',[TestController::class, 'sendMessage'])->name('sendMessage');
+Route::get('/Registro/{numero}',[TestController::class, 'primerMensajePlantilla'])->name('primerMensajePlantilla');
+Route::get('/pay-message/{numero}/{nota}',[TestController::class, 'AdelantoDado'])->name('AdelantoDado');
 
 Route::get('inicio',[NotaController::class, 'inicio'])->name('inicio');
 Route::get('/',[NotaController::class, 'welcome'])->name('welcome');
@@ -46,6 +47,8 @@ Route::get('/mostrar/{id}',[NotaController::class, 'show'])->name('notas.show');
 Route::patch('/entregaMenu',[NotaController::class, 'datosEntregaMenu'])->name('notas.datosEntregaMenu');
 Route::patch('/actualizarEntrega',[NotaController::class, 'updateCreate'])->name('notas.updateCreate');
 Route::post('/buscarNota',[NotaController::class, 'search'])->name('notas.search');
+Route::post('/confirmado',[NotaController::class, 'confirmado'])->name('notas.confirmado');
+
 
 Route::view('/crear','clientes.nuevo')->name('clientes.nuevo');
 Route::post('/storeCliente',[ClientesController::class, 'store'])->name('clientes.store');
