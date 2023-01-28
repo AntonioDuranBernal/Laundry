@@ -68,13 +68,19 @@ public function datosEntregaMenu(Request $request){
 }
 
 public function confirmado(Request $request){
-  $n = DB::table('notas')->where('id',$request->input('idNota'))->first();
+  $n = nota::where('id',$request->input('idNota'))->firstOrFail();
   $idCliente = $n->idCliente;
 
-  $nota = "
-    Tintorería Camisas x1 $40
-    Lavandería Kilo de ropa x2 $30
-   ";
+  $detalles = detalleNotaServicio::where('idNota',$request->input('idNota'))->firstOrFail();
+  $idart = $detalles->idArticulo;
+  $cant = $detalles->cantidad;
+  $subtotal = $detalles->subtotal;
+  $prenda = Prenda::where('id',$idart)->firstOrFail();
+  $nombre = $prenda->nombre;
+
+  $nota = " Lava Express: 28 de Enero 2023 ".
+    $nombre." ".$cant." $".$subtotal.". "
+    ;
 
   $DatosCliente = DB::table('clientes')->where('id',$idCliente)->first();
   $cel = $DatosCliente->celular;
