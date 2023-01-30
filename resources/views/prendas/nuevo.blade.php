@@ -10,7 +10,6 @@
 				<small class="font-bold text-red-500/80">{{$message}}</small>
 				@enderror
 			</div>
-
 		      <div class="rounded-md shadow-sm border-slate-800 justify-center">
                 <span class="font-serif text-slate-800 dark:text-slate-400">Servicio</span>
 				<div class="flex flex-col">
@@ -29,8 +28,8 @@
 					ease-in-out
 					m-0
 					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Ingresar " type="text" autofocus="autofocus" name="servicio">
-					@foreach($servicios as $servicio)
-					<option value="{{$servicio->id}}">{{$servicio->descripcion}}</option>
+					@foreach($servicios as $elemento)
+					<option value="{{$elemento->descripcion}}">{{$elemento->descripcion}}</option>
 					@endforeach
 				</select>
 			</div>

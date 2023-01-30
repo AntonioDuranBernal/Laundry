@@ -72,14 +72,13 @@ public function confirmado(Request $request){
   $idCliente = $n->idCliente;
 
   $detalles = detalleNotaServicio::where('idNota',$request->input('idNota'))->firstOrFail();
-  $idart = $detalles->idArticulo;
+  $nombreart = $detalles->nombreArticulo;
+  $nombreser = $detalles->nombreServicio;
   $cant = $detalles->cantidad;
   $subtotal = $detalles->subtotal;
-  $prenda = Prenda::where('id',$idart)->firstOrFail();
-  $nombre = $prenda->nombre;
 
-  $nota = " Lava Express: 28 de Enero 2023 ".
-    $nombre." ".$cant." $".$subtotal.". "
+  $nota = "Nueva nota:". "\n".
+    $nombreser." de ".$nombreart." x".$cant.": " ." $".$subtotal.". "
     ;
 
   $DatosCliente = DB::table('clientes')->where('id',$idCliente)->first();
@@ -157,22 +156,25 @@ public function storeDetallesNota(Request $request){
   $detalle= new detalleNotaServicio;
   $detalle->idNota = $request->input('idNota');
   $idr = $detalle->idNota;
-  $registro = prenda::latest('costo')->where('idEmpresa', $request->input('costo'))->where('servicio', $request->input('idServicio'))->where('id', $request->input('idElemento'))->first();
+  $registro = prenda::latest('costo')->where('idEmpresa', $request->input('costo'))->where('idservicio', $request->input('idServicio'))->where('id', $request->input('idElemento'))->first();
   $cos = $registro->costo;
   $co = (double)$cos;
-
   $detalle->cantidad = $request->input('cantidad');
   $cant = $detalle->cantidad;
   $ct = (double)$cant;
-
   $detalle->subtotal = $ct*$co;
   $detalle->descripcion = $request->input('descripcion');
   $detalle->idArticulo = $request->input('idElemento');
-  $detalle->idServicio = $request->input('idServicio');
+  $dprenda = Prenda::where('id',$request->input('idElemento'))->first();
+  $detalle->nombreArticulo = $dprenda->nombre;
+  $detalle->nombreServicio = $dprenda->servicio;
+  $detalle->idServicio = $dprenda->idservicio;
   $detalle->estado = '1';
+  //$detalle->idServicio = $request->input('idServicio');
+
   $detalle->save();
 
-  $suma= DB::table('detalle_nota_servicios')->where('idNota', $request->input('idNota'))->sum(\DB::raw('subtotal'));
+  $suma= detalleNotaServicio::where('idNota', $request->input('idNota'))->sum(\DB::raw('subtotal'));
 
   session()->flash('status',"Costo al momento: $$suma");
   return to_route('notas.indexdetallenotas',$idr);

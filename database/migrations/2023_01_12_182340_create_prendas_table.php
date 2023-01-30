@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('prendas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->integer('servicio');
+            $table->string('servicio');
+            $table->integer('idservicio')->nullable();
             $table->double('costo');
             $table->string('descripcion');
             $table->integer('idEmpresa');

@@ -32,7 +32,7 @@ class PrendaController extends Controller
     {
         $request->validate(
             [
-                'servicio'=> ['required','min_digits:1','numeric'],
+                //'servicio'=> ['required','min_digits:1','string'],
                 'costo'=> ['required','min_digits:1','numeric'],
                 'nombre'=> ['required','string'],
                 'descripcion'=> ['required','string'],
@@ -45,6 +45,8 @@ class PrendaController extends Controller
         $prenda->descripcion = $request->input('descripcion');
         $prenda->servicio = $request->input('servicio');
         $prenda->idEmpresa = $request->input('idEmpresa');
+        $serv = Servicio::where('descripcion',$request->input('servicio'))->first();
+        $prenda->idservicio = $serv->id;
         $prenda->save();
 
         $idp = prenda::latest('id')->first();

@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->integer('idNota');
             $table->integer('idArticulo');
+            $table->string('nombreArticulo')->nullable();
             $table->integer('idServicio');
+            $table->string('nombreServicio')->nullable();
             $table->string('descripcion')->nullable();
             $table->double('subtotal');
             $table->integer('estado');
