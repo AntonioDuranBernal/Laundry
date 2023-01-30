@@ -8,7 +8,7 @@ class TestController extends Controller
 {
 
 public function primerMensajePlantilla($cel){
-        $token = 'EABKvFe5F8wsBAEO2Q73dilWaJAufyV8m4KZCZC6Rm9sVuirmKHrW5W30RAQFjnkr7VttHO2Bfk1gPGrKPpyZCF1ZCSBUhMhxeUEOstOzwnrIcaUZB7kq7ni7nUVOYy5lpgTogoxODKUhC0ZBzIzXzoFrqJc6p2fAiam7tEZBHf0184jQP9T5sfIZAOPgmCZAvST6z11ZCrB2nZBgwZDZD';
+        $token = 'EABKvFe5F8wsBAN7dvR0CeOl9jVEIVcTNiRkqrI3b0gYB5ePWr76a7LwWzDrFovyMUZA8KkDWAvkpQuX2H95nxo9Rn0witV7pqKIvccE7LFil0GHZAHSq7pkZB5ANY7yHJgFyeamGNbVUcvtQ515ZBQ0ZAkMMWNnnV4GhZB8XL8ERcEVzz9s179MP6ee9iWQdA2SFOcsgYvuwZDZD';
         $phoneId = '106567539007218';
         $version = 'v15.0';
         //$cel = 529512419458;
@@ -57,7 +57,7 @@ public function primerMensajePlantilla($cel){
 }
 
 public function AdelantoDado($cel,$nota){
-        $token = 'EABKvFe5F8wsBAEO2Q73dilWaJAufyV8m4KZCZC6Rm9sVuirmKHrW5W30RAQFjnkr7VttHO2Bfk1gPGrKPpyZCF1ZCSBUhMhxeUEOstOzwnrIcaUZB7kq7ni7nUVOYy5lpgTogoxODKUhC0ZBzIzXzoFrqJc6p2fAiam7tEZBHf0184jQP9T5sfIZAOPgmCZAvST6z11ZCrB2nZBgwZDZD';
+        $token = 'EABKvFe5F8wsBAN7dvR0CeOl9jVEIVcTNiRkqrI3b0gYB5ePWr76a7LwWzDrFovyMUZA8KkDWAvkpQuX2H95nxo9Rn0witV7pqKIvccE7LFil0GHZAHSq7pkZB5ANY7yHJgFyeamGNbVUcvtQ515ZBQ0ZAkMMWNnnV4GhZB8XL8ERcEVzz9s179MP6ee9iWQdA2SFOcsgYvuwZDZD';
         //$cel="529512419458";
         $phoneId = '106567539007218';
         $version = 'v15.0';

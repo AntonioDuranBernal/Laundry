@@ -233,7 +233,7 @@ return to_route('notas.index')->with('status','Nota marcada como entregada.');
 }
 
 public function historialPagos($id){
-  $hp = DB::table('historial_pagos')->where('idNota',$id)->get();
+  $hp =historialPago::where('idNota',$id)->get();
   return view ('notas.historialP',['hitorial'=>$hp,'idNota'=>$id]);
 }
 
@@ -383,13 +383,13 @@ public function registrarPago(Request $request){
 
 
 public function show($id){
- $n = DB::table('notas')->where('id', $id)->first();
- $nd = DB::table('detalle_nota_servicios')->where('idNota', $id)->get();
- return view ('notas.show',['nota'=>$n, 'detalles'=>$nd]);
+ $n = nota::where('id', $id)->first();
+ $nd = detalleNotaServicio::where('idNota', $id)->get();
+  return view ('notas.show',['nota'=>$n, 'detalles'=>$nd]);
 }
 
 public function datosPagoMenu($id){
-  $n = DB::table('notas')->where('id', $id)->first();
+  $n = nota::where('id', $id)->first();
   $suma=$n->restante;
   return view ('notas.datosPago',['idn'=>$id,'actual'=>$suma]);
 }
