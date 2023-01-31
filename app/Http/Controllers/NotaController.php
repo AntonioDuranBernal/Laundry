@@ -70,22 +70,23 @@ public function datosEntregaMenu(Request $request){
 public function confirmado(Request $request){
   $n = nota::where('id',$request->input('idNota'))->firstOrFail();
   $idCliente = $n->idCliente;
+  $detalles = detalleNotaServicio::where('idNota',$request->input('idNota'))->get();
 
-  $detalles = detalleNotaServicio::where('idNota',$request->input('idNota'))->firstOrFail();
-  $nombreart = $detalles->nombreArticulo;
-  $nombreser = $detalles->nombreServicio;
-  $cant = $detalles->cantidad;
-  $subtotal = $detalles->subtotal;
+  $n = "Nueva nota:". "\n";
+    foreach ($detalles as $registro) {
+     $nombreart = $registro->nombreArticulo;
+     $nombreser = $registro->nombreServicio;
+     $cant = $registro->cantidad;
+     $subtotal = $registro->subtotal;
+     $n = $n."".$nombreser." de ".$nombreart." x".$cant.": " ." $".$subtotal."\n";
+   }
+ $nota = $n;
 
-  $nota = "Nueva nota:". "\n".
-    $nombreser." de ".$nombreart." x".$cant.": " ." $".$subtotal.". "
-    ;
-
-  $DatosCliente = DB::table('clientes')->where('id',$idCliente)->first();
-  $cel = $DatosCliente->celular;
-  DB::table('notas')->where('id',$request->input('idNota'))->update(['idEstado' =>25]);
-  session()->flash('status',"Nota $request->input('idNota'), confirmada, mensaje enviado");
-  return to_route('AdelantoDado',['numero'=>$cel,'nota'=>$nota]);
+ $DatosCliente = DB::table('clientes')->where('id',$idCliente)->first();
+ $cel = $DatosCliente->celular;
+ DB::table('notas')->where('id',$request->input('idNota'))->update(['idEstado' =>25]);
+ session()->flash('status',"Nota $request->input('idNota'), confirmada, mensaje enviado");
+ return to_route('AdelantoDado',['numero'=>$cel,'nota'=>$nota]);
 }
 
 
@@ -387,7 +388,7 @@ public function registrarPago(Request $request){
 public function show($id){
  $n = nota::where('id', $id)->first();
  $nd = detalleNotaServicio::where('idNota', $id)->get();
-  return view ('notas.show',['nota'=>$n, 'detalles'=>$nd]);
+ return view ('notas.show',['nota'=>$n, 'detalles'=>$nd]);
 }
 
 public function datosPagoMenu($id){
