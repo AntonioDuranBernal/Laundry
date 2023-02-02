@@ -47,6 +47,12 @@ class NotaController extends Controller
   return view('registro.ingresos',['todos'=>$todos]);
 }
 
+ public function pendientes(Request $request){
+  //con el estado, deberia mandar el nombre, para que vea más claro que esta pasand con su nota
+  $hp =nota::where('idCliente',$request->input('id'))->where('idEstado','<=',38)->get();
+  return view ('notas.pendientesCliente',['notas'=>$hp,'idCliente'=>$request->input('id')]);
+}
+
 public function entreFechas(Request $request){
   $inicio = $request->input('inicio');
   $fin = $request->input('fin');

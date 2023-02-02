@@ -13,14 +13,16 @@
 			<form action="{{route('clientes.editar')}}" method="POST" class="px-3 py-2 text-sm font-medium rounded-md hover:text-sky-600 dark:hover:text-white {{request()->routeIs('clientes.editar') ? 'text-sky-600 dark:text-white' : 'text-black'}}">
 				@csrf
 				<input id="id" name="id" type="hidden"  value={{$cliente->id}}>
-				<button type="submit">Editar</button>
+				<button type="submit">Opciones</button>
 			</form>
 
-			<form action="{{route('clientes.eliminarCliente',$cliente->id)}}" method="POST">
-				@csrf @method('DELETE')
+
+			<form action="{{route('clientes.pendientes')}}" method="POST" class="px-3 py-2 text-sm font-medium rounded-md hover:text-sky-600 dark:hover:text-white">
+				@csrf
 				<input id="id" name="id" type="hidden"  value={{$cliente->id}}>
-				<button class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" type="submit">Eliminar</button>
+				<button type="submit">Mis notas</button>
 			</form>
+
 			<a class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" href="{{route('clientes.paranota',$cliente->celular)}}">Iniciar nota</a>
 		</div>
 	</div>

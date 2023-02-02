@@ -9,6 +9,7 @@ use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AutheticatedSessionController;
 
+
 Route::get('/Registro/{numero}',[TestController::class, 'primerMensajePlantilla'])->name('primerMensajePlantilla');
 Route::get('/pay-message/{numero}/{nota}',[TestController::class, 'AdelantoDado'])->name('AdelantoDado');
 
@@ -54,12 +55,15 @@ Route::view('/crear','clientes.nuevo')->name('clientes.nuevo');
 Route::post('/storeCliente',[ClientesController::class, 'store'])->name('clientes.store');
 Route::get('/cliente/{cel}',[ClientesController::class, 'paranota'])->name('clientes.paranota');
 
+Route::post('/pendientes',[NotaController::class, 'pendientes'])->name('clientes.pendientes');
 Route::get('/clientesInicio',[ClientesController::class, 'inicioClientes'])->name('clientes.inicioClientes');
 Route::get('/VerCliente/{id}',[ClientesController::class, 'ver'])->name('clientes.ver');
 Route::post('/editar',[ClientesController::class, 'editar'])->name('clientes.editar');
 Route::patch('/Update',[ClientesController::class, 'update'])->name('clientes.update');
 Route::post('/buscarCliente',[ClientesController::class, 'search'])->name('clientes.search');
 Route::delete('/eliminar/{idc}',[ClientesController::class, 'eliminarCliente'])->name('clientes.eliminarCliente');
+
+
 
 Route::get('/prendasInicio',[PrendaController::class, 'inicioPrendas'])->name('prendas.inicioPrendas');
 Route::get('/VerPrenda/{id}',[PrendaController::class, 'ver'])->name('prendas.ver');
