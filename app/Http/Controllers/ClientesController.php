@@ -13,7 +13,7 @@ class ClientesController extends Controller
   }
 
   public function editar(Request $request){
-    $n = DB::table('clientes')->where('id',$request->input('id'))->first();
+    $n = cliente::where('id',$request->input('id'))->first();
     $celular = $n->celular;
     $nombre = $n->nombre;
     return view ('clientes.update',['id'=>$request->input('id'),'celular'=>$celular,'nombre'=>$nombre]);
@@ -23,8 +23,8 @@ class ClientesController extends Controller
     $id = $request->input('id');
     $celular = $request->input('celular');
     $nombre = $request->input('nombre');
-    DB::table('clientes')->where('id',$id)->update(['celular' =>$celular]);
-    DB::table('clientes')->where('id',$id)->update(['nombre' =>$nombre]);
+    cliente::where('id',$id)->update(['celular' =>$celular]);
+    cliente::where('id',$id)->update(['nombre' =>$nombre]);
     session()->flash('status',"Cliente $id, actualizado");
     return to_route('clientes.inicioClientes');
   }
@@ -34,7 +34,7 @@ class ClientesController extends Controller
     ['celular'=> ['required','numeric'],
   ]);
    //$n = cliente::find($request->input('celular'));
-   $t = DB::table('clientes')->where('celular',$request->input('celular'))->first();
+   $t = cliente::where('celular',$request->input('celular'))->first();
    if(is_null($t)){
     return to_route('clientes.inicioClientes')->with('status','Cliente no encontrado.');
   }
