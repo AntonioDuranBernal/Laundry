@@ -8,7 +8,7 @@ class TestController extends Controller
 {
 
 public function primerMensajePlantilla($cel){
-        $token = 'EABKvFe5F8wsBANLZAvtiigbSYQjCjYfRorgqm5FVbo8xvTUat1zt3R5mZBTa0lw2zhxSC6PMleRzXPlaPTXSYdJNCFPsGEdJbykGLZAELtojK0HduNRZAh1iIcqkWftFUwAzlrNCYHFiMPui3idTRVhOrZAWYeyqIRnYcXO5Iw6KKdtI0NVZBRwCDZBaCGFlkLsngwZBrQ1AbQZDZD';
+        $token = 'EABKvFe5F8wsBAHnbpgzRl6Wiwxzp3h6QDRVkt7CxyNZAxzMZCiqZAZBjZARxuZCTdkOHuRbZCdHmj15uXLa8Rc3c4yAOr7XUWjNKHZBTy58KlwpyHwGk7UXeDu8JzHnLClFvtRMyGJ8FZCTeqQTyAQ7ZAHytxfzjiIAYyyCuE5nf0ZAk0l06l99T0pJZCkGZBKylZAW92DazHZAHUguXQZDZD';
         $phoneId = '106567539007218';
         $version = 'v15.0';
         //$cel = 529512419458;
@@ -57,7 +57,7 @@ public function primerMensajePlantilla($cel){
 }
 
 public function AdelantoDado($cel,$nota){
-        $token = 'EABKvFe5F8wsBANLZAvtiigbSYQjCjYfRorgqm5FVbo8xvTUat1zt3R5mZBTa0lw2zhxSC6PMleRzXPlaPTXSYdJNCFPsGEdJbykGLZAELtojK0HduNRZAh1iIcqkWftFUwAzlrNCYHFiMPui3idTRVhOrZAWYeyqIRnYcXO5Iw6KKdtI0NVZBRwCDZBaCGFlkLsngwZBrQ1AbQZDZD';
+        $token = 'EABKvFe5F8wsBAHnbpgzRl6Wiwxzp3h6QDRVkt7CxyNZAxzMZCiqZAZBjZARxuZCTdkOHuRbZCdHmj15uXLa8Rc3c4yAOr7XUWjNKHZBTy58KlwpyHwGk7UXeDu8JzHnLClFvtRMyGJ8FZCTeqQTyAQ7ZAHytxfzjiIAYyyCuE5nf0ZAk0l06l99T0pJZCkGZBKylZAW92DazHZAHUguXQZDZD';
         //$cel="529512419458";
         $phoneId = '106567539007218';
         $version = 'v15.0';
@@ -79,7 +79,7 @@ public function AdelantoDado($cel,$nota){
             'success' => true,
             'data' => $message,
         ], 200);*/
-
+        session()->flash('status',"Mensaje enviado");
         return to_route('inicio');
 
     }catch(Exception $e){

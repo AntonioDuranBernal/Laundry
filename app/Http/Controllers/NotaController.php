@@ -49,7 +49,7 @@ class NotaController extends Controller
 
  public function pendientes(Request $request){
   //con el estado, deberia mandar el nombre, para que vea más claro que esta pasand con su nota
-  $hp =nota::where('idCliente',$request->input('id'))->where('idEstado','<=',38)->get();
+  $hp =nota::where('idCliente',$request->input('id'))->orderBy('idEstado','desc')->get();
   return view ('notas.pendientesCliente',['notas'=>$hp,'idCliente'=>$request->input('id')]);
 }
 
@@ -78,20 +78,24 @@ public function confirmado(Request $request){
   $idCliente = $n->idCliente;
   $detalles = detalleNotaServicio::where('idNota',$request->input('idNota'))->get();
 
-  $n = "Nueva nota:". "\n";
+  $n = "LAVA EXPRESS | ". "Nota: ". $request->input('idNota') . "\n" .
+    "Fecha de entrega: ". $n->fechaEntrega . "\n" .
+    "Importe: $". $n->total . " Saldo a pagar: $". $n->restante .  "\n". "\n".
+    "Detalles: " ."\n";
     foreach ($detalles as $registro) {
      $nombreart = $registro->nombreArticulo;
      $nombreser = $registro->nombreServicio;
      $cant = $registro->cantidad;
      $subtotal = $registro->subtotal;
-     $n = $n."".$nombreser." de ".$nombreart." x".$cant.": " ." $".$subtotal."\n";
+     $n = $n."".$nombreser." de ".$nombreart." x".$cant.": " ." $".$subtotal. "\n";
    }
- $nota = $n;
+     $n = $n."\n";
+     //$n = $n . "\n" . "No nos hacemos responsables por objetos y/o valores olvidados en las prendas. Gracias por su preferencia. " . "\n";
+    $nota = $n;
 
  $DatosCliente = DB::table('clientes')->where('id',$idCliente)->first();
  $cel = $DatosCliente->celular;
- DB::table('notas')->where('id',$request->input('idNota'))->update(['idEstado' =>25]);
- session()->flash('status',"Nota $request->input('idNota'), confirmada, mensaje enviado");
+ //DB::table('notas')->where('id',$request->input('idNota'))->update(['idEstado' =>25]);
  return to_route('AdelantoDado',['numero'=>$cel,'nota'=>$nota]);
 }
 
@@ -292,17 +296,17 @@ public function storepago(Request $request){
         $restante = $totalinicial-$importe;
         DB::table('notas')->where('id', $idr)->update(['restante' => $restante]);
         if ($restante>0) {
-          DB::table('notas')->where('id', $idr)->update(['idEstado' => '10']);
+          DB::table('notas')->where('id', $idr)->update(['idEstado' => '22']);
         }else{
-          DB::table('notas')->where('id', $idr)->update(['idEstado' => '15']);
+          DB::table('notas')->where('id', $idr)->update(['idEstado' => '33']);
         }
       }else{
         $restante = $totalrestante-$importe;
         DB::table('notas')->where('id', $idr)->update(['restante' => $restante]);
         if ($restante>0) {
-          DB::table('notas')->where('id', $idr)->update(['idEstado' => '10']);
+          DB::table('notas')->where('id', $idr)->update(['idEstado' => '22']);
         }else{
-          DB::table('notas')->where('id', $idr)->update(['idEstado' => '15']);
+          DB::table('notas')->where('id', $idr)->update(['idEstado' => '33']);
         }
       }
       $cambio = $entregado-$importe;
@@ -353,17 +357,17 @@ public function registrarPago(Request $request){
         $restante = $totalinicial-$importe;
         DB::table('notas')->where('id', $idr)->update(['restante' => $restante]);
         if ($restante>0) {
-          DB::table('notas')->where('id', $idr)->update(['idEstado' => '10']);
+          DB::table('notas')->where('id', $idr)->update(['idEstado' => '22']);
         }else{
-          DB::table('notas')->where('id', $idr)->update(['idEstado' => '15']);
+          DB::table('notas')->where('id', $idr)->update(['idEstado' => '33']);
         }
       }else{
         $restante = $totalrestante-$importe;
         DB::table('notas')->where('id', $idr)->update(['restante' => $restante]);
         if ($restante>0) {
-          DB::table('notas')->where('id', $idr)->update(['idEstado' => '10']);
+          DB::table('notas')->where('id', $idr)->update(['idEstado' => '22']);
         }else{
-          DB::table('notas')->where('id', $idr)->update(['idEstado' => '15']);
+          DB::table('notas')->where('id', $idr)->update(['idEstado' => '33']);
         }
       }
       $cambio = $entregado-$importe;

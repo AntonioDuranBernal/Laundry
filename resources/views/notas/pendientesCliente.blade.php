@@ -36,10 +36,10 @@
                      {{$detalles->fechaEntrega}}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                     {{$detalles->total}}
+                     $ {{$detalles->total}}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                     {{$detalles->restante}}
+                     $ {{$detalles->restante}}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                      {{$detalles->apunte}}
