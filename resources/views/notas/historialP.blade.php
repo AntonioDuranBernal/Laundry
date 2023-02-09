@@ -4,7 +4,7 @@
 			<div class="inline-block min-w-full sm:px-8 lg:px-8">
 				<div class="overflow-hidden">
 					<div class="text-l font-medium text-sky-800 mb-2">
-						<h1>Información de pago Nota: {{$idNota}}</h1>
+						<h1>Información de pago Nota {{$idNota}}</h1>
 					</div>
 					<table class="px-5 md:flex-none md:w-90 min-w-full text-center">
 						<thead class="border-b bg-gray-800">

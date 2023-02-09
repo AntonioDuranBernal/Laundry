@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('fechaSalida')->nullable();
             $table->double('total')->nullable();
             $table->integer('idCliente');
+            $table->integer('idEstadoConfirmacion')->nullable();
             $table->string('apunte')->nullable();
             $table->integer('lugarEntrega');
             $table->timestamp('updated_at')->nullable();

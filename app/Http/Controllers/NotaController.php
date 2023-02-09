@@ -47,9 +47,10 @@ class NotaController extends Controller
   return view('registro.ingresos',['todos'=>$todos]);
 }
 
- public function pendientes(Request $request){
+public function pendientes(Request $request){
   //con el estado, deberia mandar el nombre, para que vea más claro que esta pasand con su nota
-  $hp =nota::where('idCliente',$request->input('id'))->orderBy('idEstado','desc')->get();
+  //$hp =nota::where('idCliente',$request->input('id'))->orderBy('idEstado','desc')->get();
+  $hp =nota::where('idCliente',$request->input('id'))->where('idEstado', '<=','9')->where('idEstado', '>=','4')->get();
   return view ('notas.pendientesCliente',['notas'=>$hp,'idCliente'=>$request->input('id')]);
 }
 
@@ -75,30 +76,31 @@ public function datosEntregaMenu(Request $request){
 
 public function confirmado(Request $request){
   $n = nota::where('id',$request->input('idNota'))->firstOrFail();
+  nota::where('id',$request->input('idNota'))->update(['idEstado' => 4]);
+  nota::where('id',$request->input('idNota'))->update(['idEstadoConfirmacion' => 12]);
   $idCliente = $n->idCliente;
   $detalles = detalleNotaServicio::where('idNota',$request->input('idNota'))->get();
 
   $n = "LAVA EXPRESS | ". "Nota: ". $request->input('idNota') . "\n" .
-    "Fecha de entrega: ". $n->fechaEntrega . "\n" .
-    "Importe: $". $n->total . " Saldo a pagar: $". $n->restante .  "\n". "\n".
-    "Detalles: " ."\n";
-    foreach ($detalles as $registro) {
-     $nombreart = $registro->nombreArticulo;
-     $nombreser = $registro->nombreServicio;
-     $cant = $registro->cantidad;
-     $subtotal = $registro->subtotal;
-     $n = $n."".$nombreser." de ".$nombreart." x".$cant.": " ." $".$subtotal. "\n";
-   }
-     $n = $n."\n";
+  "Fecha de entrega: ". $n->fechaEntrega . "\n" .
+  "Importe: $". $n->total . " Saldo a pagar: $". $n->restante .  "\n". "\n".
+  "Detalles: " ."\n";
+  foreach ($detalles as $registro) {
+   $nombreart = $registro->nombreArticulo;
+   $nombreser = $registro->nombreServicio;
+   $cant = $registro->cantidad;
+   $subtotal = $registro->subtotal;
+   $n = $n."".$nombreser." de ".$nombreart." x".$cant.": " ." $".$subtotal. "\n";
+ }
+ $n = $n."\n";
      //$n = $n . "\n" . "No nos hacemos responsables por objetos y/o valores olvidados en las prendas. Gracias por su preferencia. " . "\n";
-    $nota = $n;
+ $nota = $n;
 
  $DatosCliente = cliente::where('id',$idCliente)->first();
  $cel = $DatosCliente->celular;
  //DB::table('notas')->where('id',$request->input('idNota'))->update(['idEstado' =>25]);
  return to_route('AdelantoDado',['numero'=>$cel,'nota'=>$nota]);
 }
-
 
 public function updateCreate(Request $request){
   $id = $request->input('idNota');
@@ -220,15 +222,14 @@ public function search(Request $request){
 }
 
 public function todolisto(Request $request){
- $idr = $request->input('idNota');
- $nota = nota::where('id', '=',$idr)->first();
+ $nota = nota::where('id', '=',$request->input('idNota'))->first();
  $resta = $nota->restante;
  if ($resta>0) {
-  nota::where('id',$idr)->update(['idEstado' => '12']);
-  return to_route('notas.show',$idr)->with('status','Nota marcada como lista, con pago pendiente.');
+  nota::where('id',$request->input('idNota'))->update(['idEstado' => '8']);
+  return to_route('notas.show',$request->input('idNota'))->with('status','Nota marcada como lista, pago incompleto.');
 }else{
-  nota::where('id',$idr)->update(['idEstado' => '14']);
-  return to_route('notas.show',$idr)->with('status','Nota marcada como lista, con pago completo.');
+  nota::where('id',$request->input('idNota'))->update(['idEstado' => '8']);
+  return to_route('notas.show',$request->input('idNota'))->with('status','Nota marcada como lista, con pago cubierto.');
 }
 }
 
@@ -239,7 +240,7 @@ public function entregarNota(Request $request){
  if ($resta>0) {
    return to_route('notas.historialPagos',$idr)->with('status','Nota con pago incompleto, no es posible entregar.');
  }else{
-  nota::where('id',$idr)->update(['idEstado' => '16']);
+  nota::where('id',$idr)->update(['idEstado' => '10']);
   return to_route('notas.show',$idr)->with('status','Nota marcada como entregada.');
 }
 return to_route('notas.index')->with('status','Nota marcada como entregada.');
@@ -296,23 +297,23 @@ public function storepago(Request $request){
         $restante = $totalinicial-$importe;
         nota::where('id', $idr)->update(['restante' => $restante]);
         if ($restante>0) {
-          nota::where('id', $idr)->update(['idEstado' => '22']);
+          nota::where('id', $idr)->update(['idEstado' => '3']);
         }else{
-          nota::where('id', $idr)->update(['idEstado' => '33']);
+          nota::where('id', $idr)->update(['idEstado' => '3']);
         }
       }else{
         $restante = $totalrestante-$importe;
         nota::where('id', $idr)->update(['restante' => $restante]);
         if ($restante>0) {
-          nota::where('id', $idr)->update(['idEstado' => '22']);
+          nota::where('id', $idr)->update(['idEstado' => '3']);
         }else{
-         nota::where('id', $idr)->update(['idEstado' => '33']);
-        }
-      }
-      $cambio = $entregado-$importe;
-      if ($importe>0) {
-        $historia= new historialPago;
-        $historia->idNota = $idr;
+         nota::where('id', $idr)->update(['idEstado' => '3']);
+       }
+     }
+     $cambio = $entregado-$importe;
+     if ($importe>0) {
+      $historia= new historialPago;
+      $historia->idNota = $idr;
         $historia->idUsuarioSistema = $idr; //POR MODIFICAR USUARIOOOOOOOOOOOOOOOO
         $historia->importe = $importe;
         $historia->restante = $restante;
@@ -357,17 +358,17 @@ public function registrarPago(Request $request){
         $restante = $totalinicial-$importe;
         nota::where('id', $idr)->update(['restante' => $restante]);
         if ($restante>0) {
-          nota::where('id', $idr)->update(['idEstado' => '22']);
+          nota::where('id', $idr)->update(['idEstado' => '3']);
         }else{
-          nota::where('id', $idr)->update(['idEstado' => '33']);
+          nota::where('id', $idr)->update(['idEstado' => '3']);
         }
       }else{
         $restante = $totalrestante-$importe;
         nota::where('id', $idr)->update(['restante' => $restante]);
         if ($restante>0) {
-          nota::where('id', $idr)->update(['idEstado' => '22']);
+          nota::where('id', $idr)->update(['idEstado' => '3']);
         }else{
-          nota::where('id', $idr)->update(['idEstado' => '33']);
+          nota::where('id', $idr)->update(['idEstado' => '3']);
         }
       }
       $cambio = $entregado-$importe;

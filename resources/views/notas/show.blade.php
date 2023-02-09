@@ -6,24 +6,28 @@
 			<div class="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
 				<div class="mx-auto">
 					<div class="flex space-x-4">
+
 						<!-- Active: 'text-sky-600 dark:text-white', Inactive 'text-slate-400' -->
 						<form action="{{route('notas.datosEntregaMenu')}}" method="POST" class="px-3 py-2 text-sm font-medium rounded-md hover:text-sky-600 dark:hover:text-white {{request()->routeIs('notas.datosEntregaMenu') ? 'text-sky-600 dark:text-white' : 'text-black'}}">
 							@csrf @method('PATCH')
 							<input id="idNota" name="idNota" type="hidden"  value={{$nota->id}}>
 							<button type="submit">Datos de entrega</button>
 						</form>
+
 						<!-- Active: 'text-sky-600 dark:text-white', Inactive 'text-slate-400' -->
-						<form action="{{route('notas.datosPagoMenu',$nota->id)}}" method="POST" class="px-3 py-2 text-sm font-medium rounded-md hover:text-sky-600 dark:hover:text-white {{request()->routeIs('notas.datosEntregaMenu') ? 'text-sky-600 dark:text-white' : 'text-black'}}">
+						<form <?php if ($nota->idEstadoConfirmacion > '12' or  $nota->idEstado < '10'){ ?> style="display: none;" <?php } ?> action="{{route('notas.datosPagoMenu',$nota->id)}}" method="POST" class="px-3 py-2 text-sm font-medium rounded-md hover:text-sky-600 dark:hover:text-white {{request()->routeIs('notas.datosEntregaMenu') ? 'text-sky-600 dark:text-white' : 'text-black'}}" >
 							@csrf @method('PATCH')
 							<input id="idNota" name="idNota" type="hidden"  value={{$nota->id}}>
 							<button type="submit">Detalles de servicio</button>
 						</form>
+
 						<!-- Active: 'text-sky-600 dark:text-white', Inactive 'text-slate-400' -->
-						<form action="{{route('notas.datosPagoMenu',$nota->id)}}" method="POST" class="px-3 py-2 text-sm font-medium rounded-md hover:text-sky-600 dark:hover:text-white {{request()->routeIs('notas.datosEntregaMenu') ? 'text-sky-600 dark:text-white' : 'text-black'}}">
+						<form <?php if ($nota->idEstadoConfirmacion > '12' or  $nota->idEstado < '10'){ ?> style="display: none;" <?php } ?> action="{{route('notas.datosPagoMenu',$nota->id)}}" method="POST" class="px-3 py-2 text-sm font-medium rounded-md hover:text-sky-600 dark:hover:text-white {{request()->routeIs('notas.datosEntregaMenu') ? 'text-sky-600 dark:text-white' : 'text-black'}}">
 							@csrf @method('PATCH')
 							<input id="idNota" name="idNota" type="hidden"  value={{$nota->id}}>
 							<button type="submit">Datos de pago</button>
 						</form>
+
 					</div>
 				</div>
 			</div>
@@ -90,22 +94,22 @@
 	</div>
 	<div class="mb-3 px-8 space-y-2">
 		<div class="flex items-center justify-between mt-4">
+
 			<a class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" href="{{route('inicio')}}">Regresar</a>
 
-
-			<form class="text-sm font-semibold underline border-2 border-transparent rounded dark:text-slate-300 text-slate-600 focus:border-slate-500 focus:outline-none" <?php if ($nota->idEstado <= '15' | $nota->idEstado <= '26'){ ?> style="display:none;" <?php   } ?> action="{{route('notas.todolisto')}}" method="POST">
+			<form class="text-sm font-semibold underline border-2 border-transparent rounded dark:text-slate-300 text-slate-600 focus:border-slate-500 focus:outline-none" <?php if ($nota->idEstado < '4' | $nota->idEstado > '7' | $nota->idEstadoConfirmacion < '13'){ ?> style="display:none;" <?php   } ?> action="{{route('notas.todolisto')}}" method="POST">
 				@csrf @method('PATCH')
 				<input id="idNota" name="idNota" type="hidden"  value={{$nota->id}}>
 				<button class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" type="submit">Listo</button>
 			</form>
 
-			<form class="text-sm font-semibold underline border-2 border-transparent rounded dark:text-slate-300 text-slate-600 focus:border-slate-500 focus:outline-none" <?php if ($nota->idEstado <= '16'){ ?> style="display:none;" <?php   } ?> action="{{route('notas.entregarNota')}}" method="POST">
+			<form class="text-sm font-semibold underline border-2 border-transparent rounded dark:text-slate-300 text-slate-600 focus:border-slate-500 focus:outline-none" <?php if ($nota->idEstadoConfirmacion < '12' or $nota->idEstado > '9' or $nota->restante > '0'){ ?> style="display:none;" <?php   } ?> action="{{route('notas.entregarNota')}}" method="POST">
 				@csrf @method('PATCH')
 				<input id="idNota" name="idNota" type="hidden"  value={{$nota->id}}>
 				<button class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" type="submit">Entregar</button>
 			</form>
 
-			<form class="text-sm font-semibold underline border-2 border-transparent rounded dark:text-slate-300 text-slate-600 focus:border-slate-500 focus:outline-none" action="{{route('notas.confirmado')}}" method="POST">
+			<form class="text-sm font-semibold underline border-2 border-transparent rounded dark:text-slate-300 text-slate-600 focus:border-slate-500 focus:outline-none" <?php if ($nota->idEstadoConfirmacion > '11'){ ?> style="display: none;" <?php } ?> action="{{route('notas.confirmado')}}" method="POST">
 				@csrf
 				<input id="idNota" name="idNota" type="hidden"  value={{$nota->id}}>
 				<button class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out border border-2 border-transparent rounded-md dark:text-sky-200 bg-sky-800 hover:bg-sky-700 active:bg-sky-700 focus:outline-none focus:border-sky-500" type="submit">Confirmar</button>
