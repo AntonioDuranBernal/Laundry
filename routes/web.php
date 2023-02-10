@@ -8,6 +8,9 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AutheticatedSessionController;
+use App\Http\Controllers\UsersInformationController;
+use App\Http\Controllers\EmpresasController;
+use App\Http\Controllers\SucursalesController;
 
 
 Route::get('/Registro/{numero}',[TestController::class, 'primerMensajePlantilla'])->name('primerMensajePlantilla');
@@ -16,6 +19,21 @@ Route::get('/pay-message/{numero}/{nota}',[TestController::class, 'AdelantoDado'
 Route::get('inicio',[NotaController::class, 'inicio'])->name('inicio');
 Route::get('/',[NotaController::class, 'welcome'])->name('welcome');
 Route::view('/registro','auth.registro')->name('registro');
+
+Route::post('/guardar',[UsersInformationController::class, 'guardar'])->name('usuario.guardar');
+Route::view('/UsuarioNuevo','usuarios.crear')->name('usuarios.crear');
+Route::post('/buscarUsuario',[UsersInformationController::class, 'show'])->name('usuario.show');
+Route::get('/VerUsuario/{id}',[UsersInformationController::class, 'ver'])->name('usuarios.ver');
+Route::get('/inicioUsuarios',[UsersInformationController::class, 'inicioUsuarios'])->name('usuarios.inicioUsuarios');
+
+Route::get('/SucursalNuevo',[SucursalesController::class, 'nuevo'])->name('sucursales.nuevo');
+Route::post('/GuardarSucursal',[SucursalesController::class, 'store'])->name('sucursales.store');
+
+Route::get('/inicioEmpresas',[EmpresasController::class, 'inicioEmpresas'])->name('empresas.inicioEmpresas');
+Route::post('/buscarEmpresas',[EmpresasController::class, 'search'])->name('empresas.search');
+Route::view('/EmpresaNuevo','empresas.nuevo')->name('empresas.nuevo');
+Route::get('/VerEmpresa/{id}',[EmpresasController::class, 'ver'])->name('empresas.ver');
+Route::post('/GuardarEmpresa',[EmpresasController::class, 'store'])->name('empresa.store');
 
 Route::post('/ustore',[RegisteredUserController::class, 'ustore'])->name('user.store');
 Route::post('/sesion',[AutheticatedSessionController::class, 'astore'])->name('session');

@@ -11,7 +11,7 @@ use App\Models\Servicio;
 use App\Models\cliente;
 use App\Models\detalleNotaServicio;
 use App\Models\historialPago;
-
+use Auth;
 class NotaController extends Controller
 {
   public function __construct(){
@@ -83,7 +83,8 @@ public function confirmado(Request $request){
 
   $n = "LAVA EXPRESS | ". "Nota: ". $request->input('idNota') . "\n" .
   "Fecha de entrega: ". $n->fechaEntrega . "\n" .
-  "Importe: $". $n->total . " Saldo a pagar: $". $n->restante .  "\n". "\n".
+  "Importe: $". $n->total . " Saldo a pagar: $". $n->restante .  "\n".
+  "Atendido por: ". Auth::user()->name . "\n". "\n".
   "Detalles: " ."\n";
   foreach ($detalles as $registro) {
    $nombreart = $registro->nombreArticulo;
