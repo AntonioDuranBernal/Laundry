@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 use App\Models\cliente;
+use App\Models\sucursales;
+use App\Models\usersInformation;
 
 class ClientesController extends Controller
 {
@@ -33,8 +35,9 @@ class ClientesController extends Controller
    $request->validate(
     ['celular'=> ['required','numeric'],
   ]);
-   //$n = cliente::find($request->input('celular'));
-   $t = cliente::where('celular',$request->input('celular'))->first();
+   $usuario = usersInformation::where('idUser',auth()->user()->id)->first();
+   $idempresa = $usuario->idEmpresa;
+   $t = cliente::where('idEmpresa',$idempresa)->where('celular',$request->input('celular'))->first();
    if(is_null($t)){
     return to_route('clientes.inicioClientes')->with('status','Cliente no encontrado.');
   }
@@ -48,20 +51,19 @@ public function eliminarCliente(cliente $idc){
 
 public function store(Request $request){
   $request->validate(
-    [   'celular'=> ['required','digits:12','numeric','unique:clientes,celular'],
-    'nombre'=> ['required','string']
+    [
+    'celular'=> ['required','digits:12','numeric','unique:clientes,celular'],
+    'nombre'=> ['required','string'],
+    'idEmpresa'=> ['required'],
   ]);
-  $cliente= new cliente;
-  $cel = $request->input('celular');
-  $cliente->idEstado = '1';
-  $cliente->nombre = $request->input('nombre');
-  $cliente->celular = $cel;
-  $cliente->save();
-  $idc = cliente::latest('id')->first();
-  $idr = $idc->id;
-  session()->flash('status',"Celular cliente: $cel Id cliente: $idr");
-  //return to_route('primerMensajePlantilla');
-  return to_route('primerMensajePlantilla',$cel);
+   cliente::create([
+    'celular'=> $request->celular,
+    'nombre'=> $request->nombre,
+    'idEmpresa'=> $request->idEmpresa,
+    'celular'=> $request->celular,
+    'idEstado'=> 1,
+    ]);
+  return to_route('primerMensajePlantilla',[$request->celular,$request->nombre]);
 }
 
 public function paranota($cel){
@@ -79,16 +81,22 @@ public function paranota($cel){
    $Cliente[0]->estado = $estado;
    $Cliente[0]->nombre = $nombre;
    $Cliente[0]->celular = $celular;
-
-   return view('notas.create',['fechaEntrega'=>$stringDate,'lugarEntrega'=>1,'cliente'=>$Cliente]);
+   $usuario = usersInformation::where('idUser',auth()->user()->id)->first();
+   $empresa = $usuario->idEmpresa;
+   $sucursales = sucursales::where('idEmpresa',$empresa)->get();
+   return view('notas.create',['fechaEntrega'=>$stringDate,'sucursales'=>$sucursales,'cliente'=>$Cliente]);
  }
 
  public function nuevo(){
-  return view ('clientes.nuevo');
+  $usuario = usersInformation::where('idUser',auth()->user()->id)->first();
+  $idempresa = $usuario->idEmpresa;
+  return view('clientes.nuevo',['idEmpresa'=>$idempresa]);
 }
 
 public function inicioClientes(){
-  $elementos = cliente::get();
+  $usuario = usersInformation::where('idUser',auth()->user()->id)->first();
+  $idempresa = $usuario->idEmpresa;
+  $elementos = cliente::where('idEmpresa',$idempresa)->get();
   return view('clientes.inicioClientes', ['elementos'=>$elementos]);
 }
 

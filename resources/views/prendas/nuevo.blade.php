@@ -51,7 +51,7 @@
 				@enderror
 			</div>
 
-			<input id="id" name="idEmpresa" type="hidden"  value='12345'>
+			<input id="id" name="idEmpresa" type="hidden"  value='{{$idEmpresa}}'>
 
 		<div class="flex items-center justify-between mt-2">
 			<a class="text-sm font-semibold underline border-2 border-transparent rounded dark:text-slate-300 text-slate-600 focus:border-slate-500 focus:outline-none" href="{{route('prendas.inicioPrendas')}}">Cancelar</a>

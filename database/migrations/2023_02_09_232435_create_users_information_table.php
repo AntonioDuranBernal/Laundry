@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('nombre');
             $table->integer('idUser')->unique();
             $table->string('apellidos');
-            $table->string('rol');
+            $table->integer('rol');
             $table->string('sucursal')->nullable();
-            $table->integer('idEmpresa')->nullable();
+            $table->integer('idEmpresa');
             $table->string('celular')->unique()->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->timestamp('created_at')->nullable();

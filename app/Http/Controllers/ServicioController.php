@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\usersInformation;
 use App\Models\Servicio;
 use Illuminate\Http\Request;
 
@@ -13,7 +13,9 @@ class ServicioController extends Controller
      * @return \Illuminate\Http\Response
      */
   public function inicioServicios(){
-        $elementos = Servicio::get();
+        $usuario = usersInformation::where('idUser',auth()->user()->id)->first();
+        $idempresa = $usuario->idEmpresa;
+        $elementos = Servicio::where('idEmpresa',$idempresa)->get();
         return view('servicios.inicioServicios', ['elementos'=>$elementos]);
   }
 
@@ -29,7 +31,9 @@ class ServicioController extends Controller
      */
     public function create()
     {
-        //
+        $usuario = usersInformation::where('idUser',auth()->user()->id)->first();
+        $idempresa = $usuario->idEmpresa;
+        return view('servicios.nuevo',["idEmpresa"=>$idempresa]);
     }
 
     /**
@@ -40,7 +44,8 @@ class ServicioController extends Controller
      */
     public function store(Request $request){
      $request->validate(
-         [   'idEmpresa'=> ['required','digits:5','numeric'],
+         [
+         'idEmpresa'=> ['required','numeric'],
          'descripcion'=> ['required','string']
      ]);
      $servicio = new Servicio;
@@ -66,10 +71,12 @@ class ServicioController extends Controller
     $request->validate(
       ['id'=> ['required','numeric'],
     ]);
-    $n = Servicio::find($request->input('id'));
-    if(is_null($n)){
-    return to_route('servicios.inicioServicios')->with('status','Servicio no encontrado.');
 
+        $usuario = usersInformation::where('idUser',auth()->user()->id)->first();
+        $idempresa = $usuario->idEmpresa;
+        $n = Servicio::where('idEmpresa',$idempresa)->where('id',$request->input('id'))->first();
+        if(is_null($n)){
+        return to_route('servicios.inicioServicios')->with('status','Servicio no encontrado.');
      }
      return view ('servicios.show',['servicio' => $n]);
     }

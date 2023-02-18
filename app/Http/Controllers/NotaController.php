@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Prenda;
 use App\Models\nota;
 use App\Models\Servicio;
+use App\Models\usersInformation;
+use App\Models\sucursales;
 use App\Models\cliente;
 use App\Models\detalleNotaServicio;
 use App\Models\historialPago;
@@ -30,13 +32,18 @@ class NotaController extends Controller
    date_default_timezone_set('America/Mexico_City');
    $fecha_actual = date("Y-m-d h:m:s");
    $stringDate = date("Y-m-d",strtotime($fecha_actual."+ 3 days"));
-   $clientes = cliente::get();//segun elcliente se pone lugar de entrega
-   return view('notas.create',['fechaEntrega'=>$stringDate,'lugarEntrega'=>1,'cliente'=>$clientes]);
+   $clientes = cliente::get();
+   $usuario = usersInformation::where('idUser',auth()->user()->id)->first();
+   $empresa = $usuario->idEmpresa;
+   $sucursales = sucursales::where('idEmpresa',$empresa)->get();
+   return view('notas.create',['fechaEntrega'=>$stringDate,'cliente'=>$clientes,'sucursales'=>$sucursales]);
  }
 
  public function index(){
    $notas = nota::get();
-   return view('notas.index',['notas'=>$notas]);
+   $usuario = usersInformation::where('idUser',auth()->user()->id)->first();
+   $rol = $usuario->rol;
+   return view('notas.index',['notas'=>$notas,'rol'=>$rol]);
  }
 
  public function ingresos(Request $request){
@@ -72,35 +79,6 @@ public function datosEntregaMenu(Request $request){
   $clientes = nota::get();
   $DatosCliente = cliente::where('id',$idCliente)->first();
   return view ('notas.updateCreate',['nota'=>$n,'datoscliente'=>$DatosCliente,'cliente'=>$clientes]);
-}
-
-public function confirmado(Request $request){
-  $n = nota::where('id',$request->input('idNota'))->firstOrFail();
-  nota::where('id',$request->input('idNota'))->update(['idEstado' => 4]);
-  nota::where('id',$request->input('idNota'))->update(['idEstadoConfirmacion' => 12]);
-  $idCliente = $n->idCliente;
-  $detalles = detalleNotaServicio::where('idNota',$request->input('idNota'))->get();
-
-  $n = "LAVA EXPRESS | ". "Nota: ". $request->input('idNota') . "\n" .
-  "Fecha de entrega: ". $n->fechaEntrega . "\n" .
-  "Importe: $". $n->total . " Saldo a pagar: $". $n->restante .  "\n".
-  "Atendido por: ". Auth::user()->name . "\n". "\n".
-  "Detalles: " ."\n";
-  foreach ($detalles as $registro) {
-   $nombreart = $registro->nombreArticulo;
-   $nombreser = $registro->nombreServicio;
-   $cant = $registro->cantidad;
-   $subtotal = $registro->subtotal;
-   $n = $n."".$nombreser." de ".$nombreart." x".$cant.": " ." $".$subtotal. "\n";
- }
- $n = $n."\n";
-     //$n = $n . "\n" . "No nos hacemos responsables por objetos y/o valores olvidados en las prendas. Gracias por su preferencia. " . "\n";
- $nota = $n;
-
- $DatosCliente = cliente::where('id',$idCliente)->first();
- $cel = $DatosCliente->celular;
- //DB::table('notas')->where('id',$request->input('idNota'))->update(['idEstado' =>25]);
- return to_route('AdelantoDado',['numero'=>$cel,'nota'=>$nota]);
 }
 
 public function updateCreate(Request $request){
@@ -161,16 +139,20 @@ public function addDetalle($idr){
 
 public function storeDetallesNota(Request $request){
   $request->validate(
-        ['idServicio'=> ['required','numeric'], //mas de 0
+    [
+        'idServicio'=> ['required','numeric'], //mas de 0
         'costo'=> ['required','numeric','min:1'], //mas de 1 peso, max 6 digitos
         'cantidad'=> ['required','numeric'],//mas de 0
         'idElemento'=> ['required','numeric'],//mas de 0
       ]);
 
+  $usuario = usersInformation::where('idUser',auth()->user()->id)->first();
+  $idempresa = $usuario->idEmpresa;
+
   $detalle= new detalleNotaServicio;
   $detalle->idNota = $request->input('idNota');
   $idr = $detalle->idNota;
-  $registro = prenda::latest('costo')->where('idEmpresa', $request->input('costo'))->where('idservicio', $request->input('idServicio'))->where('id', $request->input('idElemento'))->first();
+  $registro = prenda::latest('costo')->where('idEmpresa',$idempresa)->where('idservicio', $request->input('idServicio'))->where('id', $request->input('idElemento'))->first();
   $cos = $registro->costo;
   $co = (double)$cos;
   $detalle->cantidad = $request->input('cantidad');
@@ -236,13 +218,16 @@ public function todolisto(Request $request){
 
 public function entregarNota(Request $request){
  $idr = $request->input('idNota');
- $nota = nota::where('id', '=',$idr)->first();
+ $ClienteR = cliente::where('id',$request->input('idCliente'))->first();
+ $nota = nota::where('id',$idr)->first();
  $resta = $nota->restante;
  if ($resta>0) {
    return to_route('notas.historialPagos',$idr)->with('status','Nota con pago incompleto, no es posible entregar.');
  }else{
   nota::where('id',$idr)->update(['idEstado' => '10']);
-  return to_route('notas.show',$idr)->with('status','Nota marcada como entregada.');
+  $string = "Lava Expreess | Nota: " . $idr . "\n".
+  "Su nota ha sido entregada, gracias.";
+  return to_route('mensajePersonalizado',['numero'=>$ClienteR->celular,'nota'=>$string]);
 }
 return to_route('notas.index')->with('status','Nota marcada como entregada.');
 }
@@ -320,7 +305,6 @@ public function storepago(Request $request){
         $historia->restante = $restante;
         $historia->save();
       }
-
       session()->flash('status',"Cambio: $$cambio");
       return to_route('notas.show',$idr);
     }else{
@@ -332,6 +316,35 @@ public function storepago(Request $request){
     return view ('notas.datosPago',['idn'=>$idr,'actual'=>$totalrestante]);
   }
 }
+}
+
+public function confirmado(Request $request){
+  $n = nota::where('id',$request->input('idNota'))->firstOrFail();
+  nota::where('id',$request->input('idNota'))->update(['idEstado' => 4]);
+  nota::where('id',$request->input('idNota'))->update(['idEstadoConfirmacion' => 12]);
+  $idCliente = $n->idCliente;
+  $detalles = detalleNotaServicio::where('idNota',$request->input('idNota'))->get();
+
+  $n = "LAVA EXPRESS | ". "Nota: ". $request->input('idNota') . "\n" .
+  "Fecha de entrega: ". $n->fechaEntrega . "\n" .
+  "Importe: $". $n->total . " Saldo a pagar: $". $n->restante .  "\n".
+  "Atendido por: ". Auth::user()->name . "\n". "\n".
+  "Detalles: " ."\n";
+  foreach ($detalles as $registro) {
+   $nombreart = $registro->nombreArticulo;
+   $nombreser = $registro->nombreServicio;
+   $cant = $registro->cantidad;
+   $subtotal = $registro->subtotal;
+   $n = $n."".$nombreser." de ".$nombreart." x".$cant.": " ." $".$subtotal. "\n";
+ }
+ $n = $n."\n";
+     //$n = $n . "\n" . "No nos hacemos responsables por objetos y/o valores olvidados en las prendas. Gracias por su preferencia. " . "\n";
+ $nota = $n;
+
+ $DatosCliente = cliente::where('id',$idCliente)->first();
+ $cel = $DatosCliente->celular;
+ //DB::table('notas')->where('id',$request->input('idNota'))->update(['idEstado' =>25]);
+ return to_route('mensajePersonalizado',['numero'=>$cel,'nota'=>$nota]);
 }
 
 public function registrarPago(Request $request){
@@ -347,6 +360,7 @@ public function registrarPago(Request $request){
  }else{
    $nota = nota::where('id', '=',$request->input('idNota'))->first();
    $idr = $nota->id;
+   $idc = $nota->idCliente;
    $importe = $request->input('importe');
    $entregado = $request->input('importeentregado');
    if ($entregado >= $importe && $importe >0) {
@@ -374,25 +388,37 @@ public function registrarPago(Request $request){
       }
       $cambio = $entregado-$importe;
       if ($importe>0) {
-        $historia= new historialPago;
-        $historia->idNota = $idr;
-         $historia->idUsuarioSistema = $idr; //POR MODIFICAR USUARIOOOOOOOOOOOOOOOO
-         $historia->importe = $importe;
-         $historia->restante = $restante;
-         $historia->save();
+       $historia= new historialPago;
+       $historia->idNota = $idr;
+       $historia->idUsuarioSistema = $idr;
+       $historia->importe = $importe;
+       $historia->restante = $restante;
+       $historia->save();
+       //$idCliente = cliente::where('id',$idc)->first();
+       $c = cliente::where('id',$idc)->first();
+       $cel = $c->celular;
+       if($restante==0){
+        $nota = "LAVA EXPRESS | ". "Nota: ". $request->input('idNota') . "\n" .
+       "Se recibió pago de $" . $importe . "\n" .
+       "el total de su nota esta cubierto, gracias.";
+       return to_route('mensajePago',['idnota'=>$idr,'numero'=>$cel,'nota'=>$nota]);
+       }else{
+       $nota = "LAVA EXPRESS | ". "Nota: ". $request->input('idNota') . "\n" .
+       "Se recibió pago de $" . $importe . "\n" .
+       "con un restante de $" . $restante . ", gracias.";
+       return to_route('mensajePago',['idnota'=>$idr,'numero'=>$cel,'nota'=>$nota]);
        }
-       session()->flash('status',"Cambio: $$cambio");
-       return to_route('notas.show',$idr);
-     }else{
-      session()->flash('status',"La cantidad a entregar excede el costo total de la nota.");
-      $hp = historialPago::where('idNota',$idr)->get();
-      return view ('notas.historialP',['hitorial'=>$hp,'idNota'=>$idr]);
-    }
-  }else{
-    session()->flash('status',"La cantidad entregada debe ser mayor o igual al pago.");
+     }
+   }else{
+    session()->flash('status',"La cantidad a entregar excede el costo total de la nota.");
     $hp = historialPago::where('idNota',$idr)->get();
     return view ('notas.historialP',['hitorial'=>$hp,'idNota'=>$idr]);
   }
+}else{
+  session()->flash('status',"La cantidad entregada debe ser mayor o igual al pago.");
+  $hp = historialPago::where('idNota',$idr)->get();
+  return view ('notas.historialP',['hitorial'=>$hp,'idNota'=>$idr]);
+}
 }
 }
 

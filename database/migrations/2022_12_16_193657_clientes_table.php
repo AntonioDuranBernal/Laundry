@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('idEstado');
             $table->string('nombre');
             $table->string('celular');
+            $table->integer('idEmpresa');
             $table->timestamp('updated_at')->nullable();
             $table->timestamp('created_at')->nullable();
         });

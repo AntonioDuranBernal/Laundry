@@ -31,6 +31,6 @@ class SucursalesController extends Controller
     $sucur->domicilio = $request->input('domicilio');
     $sucur->save();
 
-    return view('notas.index');
+    return to_route('notas.index');
 }
 }

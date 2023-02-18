@@ -15,7 +15,9 @@ class RegisteredUserController extends Controller
   public function ustore(Request $request){
     $request->validate(
     [   'name'=> ['required','string'],
-        'rol'=> ['required','string'],
+        'rol'=> ['required','integer'],
+        'sucursal'=> ['integer'],
+        'idEmpresa'=>['required','integer'],
         'apellidos'=> ['required','string'],
         'celular'=> ['integer','unique:users_Information'],
         'email'=> ['email','unique:users'],//'required',
@@ -36,6 +38,7 @@ class RegisteredUserController extends Controller
     'celular'=> $request->celular,
     'idUser'=> $idur,
     'sucursal'=> $request->sucursal,
+    'idEmpresa'=> $request->idEmpresa,
     ]);
     return to_route('login')->with('status','Cuenta creada con éxito');
  }

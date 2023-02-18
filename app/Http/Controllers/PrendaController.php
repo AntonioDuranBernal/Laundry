@@ -5,6 +5,7 @@ use App\Models\Prenda;
 use App\Models\Servicio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\usersInformation;
 class PrendaController extends Controller
 {
     /**
@@ -13,13 +14,17 @@ class PrendaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function inicioPrendas(){
-        $elementos = prenda::get();
+        $usuario = usersInformation::where('idUser',auth()->user()->id)->first();
+        $idempresa = $usuario->idEmpresa;
+        $elementos = Prenda::where('idEmpresa',$idempresa)->get();
         return view('prendas.inicioPrendas', ['elementos'=>$elementos]);
     }
 
     public function nuevo(){
-      $servicios = Servicio::get();
-      return view('prendas.nuevo',['servicios'=>$servicios]);
+        $usuario = usersInformation::where('idUser',auth()->user()->id)->first();
+        $idempresa = $usuario->idEmpresa;
+        $servicios = Servicio::where('idEmpresa',$idempresa)->get();
+      return view('prendas.nuevo',['servicios'=>$servicios,'idEmpresa'=>$idempresa]);
   }
 
     /**

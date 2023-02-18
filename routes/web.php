@@ -13,15 +13,16 @@ use App\Http\Controllers\EmpresasController;
 use App\Http\Controllers\SucursalesController;
 
 
-Route::get('/Registro/{numero}',[TestController::class, 'primerMensajePlantilla'])->name('primerMensajePlantilla');
-Route::get('/pay-message/{numero}/{nota}',[TestController::class, 'AdelantoDado'])->name('AdelantoDado');
+Route::get('/Registro/{numero}/{nombre}',[TestController::class, 'primerMensajePlantilla'])->name('primerMensajePlantilla');
+Route::get('/personal-message/{numero}/{nota}',[TestController::class, 'mensajePersonalizado'])->name('mensajePersonalizado');
+Route::get('/pay-message/{numero}/{nota}/{idnota}',[TestController::class, 'mensajePago'])->name('mensajePago');
 
 Route::get('inicio',[NotaController::class, 'inicio'])->name('inicio');
 Route::get('/',[NotaController::class, 'welcome'])->name('welcome');
 Route::view('/registro','auth.registro')->name('registro');
 
+Route::get('/UsuarioNuevo',[UsersInformationController::class, 'crear'])->name('usuarios.crear');
 Route::post('/guardar',[UsersInformationController::class, 'guardar'])->name('usuario.guardar');
-Route::view('/UsuarioNuevo','usuarios.crear')->name('usuarios.crear');
 Route::post('/buscarUsuario',[UsersInformationController::class, 'show'])->name('usuario.show');
 Route::get('/VerUsuario/{id}',[UsersInformationController::class, 'ver'])->name('usuarios.ver');
 Route::get('/inicioUsuarios',[UsersInformationController::class, 'inicioUsuarios'])->name('usuarios.inicioUsuarios');
@@ -69,10 +70,9 @@ Route::post('/buscarNota',[NotaController::class, 'search'])->name('notas.search
 Route::post('/confirmado',[NotaController::class, 'confirmado'])->name('notas.confirmado');
 
 
-Route::view('/crear','clientes.nuevo')->name('clientes.nuevo');
+Route::get('/NuevoCliente',[ClientesController::class,'nuevo'])->name('clientes.nuevo');
 Route::post('/storeCliente',[ClientesController::class, 'store'])->name('clientes.store');
 Route::get('/cliente/{cel}',[ClientesController::class, 'paranota'])->name('clientes.paranota');
-
 Route::post('/pendientes',[NotaController::class, 'pendientes'])->name('clientes.pendientes');
 Route::get('/clientesInicio',[ClientesController::class, 'inicioClientes'])->name('clientes.inicioClientes');
 Route::get('/VerCliente/{id}',[ClientesController::class, 'ver'])->name('clientes.ver');
@@ -92,7 +92,7 @@ Route::delete('delete/{id}',[PrendaController::class, 'destroy'])->name('prendas
 
 Route::get('/servicioInicio',[ServicioController::class, 'inicioServicios'])->name('servicios.inicioServicios');
 Route::get('/VerServicio/{id}',[ServicioController::class, 'ver'])->name('servicios.ver');
-Route::view('/nuevoServicio','servicios.nuevo')->name('servicios.create');
+Route::get('/ServicioNuevo',[ServicioController::class, 'create'])->name('servicios.create');
 Route::post('/storeServicio',[ServicioController::class, 'store'])->name('servicios.store');
 Route::post('/buscaServicio',[ServicioController::class, 'show'])->name('servicios.show');
 

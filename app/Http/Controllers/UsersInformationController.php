@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
+use App\Models\sucursales;
 use App\Models\User;
 use App\Models\usersInformation;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -15,6 +16,7 @@ class UsersInformationController extends Controller
     [   'name'=> ['required','string'],
         'rol'=> ['required','string'],
         'sucursal'=> ['required','integer'],
+        'idEmpresa'=>['required','integer'],
         'apellidos'=> ['required','string'],
         'celular'=> ['integer','unique:users_Information'],
         'email'=> ['email','unique:users'],//'required',
@@ -30,22 +32,14 @@ class UsersInformationController extends Controller
   $idur = $idu->id;
 
   $ui= new usersInformation;
-  $ui->nombre = $request->input('nombre');
+  $ui->nombre = $request->input('name');
   $ui->idUser = $idur;
   $ui->rol = $request->input('rol');
   $ui->sucursal = $request->input('sucursal');
+  $ui->idEmpresa = $request->input('idEmpresa');
   $ui->apellidos = $request->input('apellidos');
   $ui->celular = $request->input('celular');
   $ui->save();
-
-    /*usersInformation::create([
-    'nombre'=> $request->name,
-    'idUser'=> $idur,
-    'rol'=> $request->rol,
-    'sucursal'=> $request->sucursal,
-    'apellidos'=> $request->apellidos,
-    'celular'=> $request->celular,
-    ]);*/
     return to_route('usuarios.inicioUsuarios')->with('status','Cuenta creada con éxito ');
   }
 
@@ -67,9 +61,18 @@ public function ver($idr){
    }
 
    public function inicioUsuarios(){
-  $elementos = usersInformation::get();
-  return view('usuarios.inicioUsuarios', ['elementos'=>$elementos]);
-}
+   $usuario = usersInformation::where('idUser',auth()->user()->id)->first();
+   $idempresa = $usuario->idEmpresa;
+   $elementos  = usersInformation::where('idEmpresa',$idempresa)->get();
+   return view('usuarios.inicioUsuarios', ['elementos'=>$elementos]);
+   }
+
+    public function crear(){
+    $usuario = usersInformation::where('idUser',auth()->user()->id)->first();
+    $idempresa = $usuario->idEmpresa;
+    $sucursal = sucursales::where('idEmpresa',$idempresa)->get();
+    return view('usuarios.crear', ['elementos'=>$sucursal,'idEmpresa'=>$idempresa]);
+    }
 
 
 }
